@@ -139,12 +139,9 @@ public class ChatServlet extends HttpServlet {
     }
 
     String messageContent = request.getParameter("message");
-    
- // make sure user didn't enter HTML along with our markup
- 		//String escapedContent = StringEscapeUtils.escapeHtml4(messageContent);
- 		
- 		// replace our markup with HTML
- 		String parsedContent = messageContent.replace("(bold)", "<strong>").replace("(/bold)", "</strong>");
+     		
+ 	// replaces the markup language with HTML that is later displayed
+ 	String parsedContent = messageContent.replace("(bold)", "<strong>").replace("(/bold)", "</strong>");
  		
 
     // this removes any HTML from the message content
@@ -155,8 +152,7 @@ public class ChatServlet extends HttpServlet {
             UUID.randomUUID(),
             conversation.getId(),
             user.getId(),
-            //parsedContent,
-            //messageContent,
+            //displays the edited message
             cleanedMessageContent,
             Instant.now());
 

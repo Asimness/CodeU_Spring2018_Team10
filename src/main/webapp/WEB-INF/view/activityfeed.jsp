@@ -38,6 +38,8 @@
     <% } %>
     <a href="/about.jsp">About</a>
   </nav>
+  
+  <H1> WELCOME TO ACTIVITY FEED </H1>
 
 </body>
 </html>
