@@ -138,8 +138,9 @@ public class ChatServlet extends HttpServlet {
       return;
     }
 
+    
     String messageContent = request.getParameter("message");
-     		
+		
  	// replaces the markup language with HTML that is later displayed
  	String parsedContent = messageContent.replace("(bold)", "<strong>").replace("(/bold)", "</strong>");
  		

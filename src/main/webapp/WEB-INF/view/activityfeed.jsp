@@ -1,3 +1,4 @@
+
 <%--
   Copyright 2017 Google Inc.
 
@@ -37,6 +38,7 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
+    <a href="/activityfeed">Activity Feed</a>
   </nav>
   
   <H1> WELCOME TO ACTIVITY FEED </H1>
