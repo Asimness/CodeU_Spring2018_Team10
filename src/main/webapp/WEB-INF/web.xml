@@ -65,5 +65,15 @@
     <servlet-name>RegisterServlet</servlet-name>
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AdminPageServlet</servlet-name>
+    <servlet-class>codeu.controller.AdminPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>AdminPageServlet</servlet-name>
+    <url-pattern>/adminPage</url-pattern>
+  </servlet-mapping>
 
 </web-app>
