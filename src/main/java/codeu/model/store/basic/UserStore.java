@@ -17,6 +17,7 @@ package codeu.model.store.basic;
 import codeu.model.data.User;
 import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,6 +58,13 @@ public class UserStore {
 
   /** The in-memory list of Users. */
   private List<User> users;
+  
+  /*
+   * Method that returns a list of users
+   */
+  public List<User> getAllUsers() {
+	  return Collections.unmodifiableList(users);
+  }
 
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
