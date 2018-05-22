@@ -66,6 +66,25 @@
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>AdminPageServlet</servlet-name>
+    <servlet-class>codeu.controller.AdminPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>AdminPageServlet</servlet-name>
+    <url-pattern>/adminPage</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ProfileServlet</servlet-name>
+    <servlet-class>codeu.controller.ProfileServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ProfileServlet</servlet-name>
+    <url-pattern>/user/*</url-pattern>
+  </servlet-mapping>
   
   <servlet>
     <servlet-name>ActivityFeedServlet</servlet-name>
