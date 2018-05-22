@@ -10,7 +10,7 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.
+// limitations under the License..
 
 package codeu.controller;
 
@@ -138,16 +138,22 @@ public class ChatServlet extends HttpServlet {
       return;
     }
 
+    
     String messageContent = request.getParameter("message");
+		
+ 	// replaces the markup language with HTML that is later displayed
+ 	String parsedContent = messageContent.replace("(bold)", "<strong>").replace("(/bold)", "</strong>");
+ 		
 
     // this removes any HTML from the message content
-    String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
+    String cleanedMessageContent = Jsoup.clean(parsedContent, Whitelist.none().addTags("strong"));
 
     Message message =
         new Message(
             UUID.randomUUID(),
             conversation.getId(),
             user.getId(),
+            //displays the edited message
             cleanedMessageContent,
             Instant.now());
 
