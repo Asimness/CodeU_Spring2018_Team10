@@ -35,4 +35,21 @@ public class UserTest {
     Assert.assertEquals(passwordHash, user.getPasswordHash());
     Assert.assertEquals(creation, user.getCreationTime());
   }
+  
+  @Test
+  public void testCreate_WithAboutMe() {
+    UUID id = UUID.randomUUID();
+    String name = "test_username";
+    String passwordHash = "$2a$10$bBiLUAVmUFK6Iwg5rmpBUOIBW6rIMhU1eKfi3KR60V9UXaYTwPfHy";
+    String aboutme = "test_aboutme";
+    Instant creation = Instant.now();
+
+    User user = new User(id, name, passwordHash, aboutme, creation);
+
+    Assert.assertEquals(id, user.getId());
+    Assert.assertEquals(name, user.getName());
+    Assert.assertEquals(passwordHash, user.getPasswordHash());
+    Assert.assertEquals(aboutme, user.getAboutMe());
+    Assert.assertEquals(creation, user.getCreationTime());
+  }
 }
