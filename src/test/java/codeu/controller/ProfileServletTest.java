@@ -66,7 +66,6 @@ public class ProfileServletTest {
 	            "test_aboutme",
 	            Instant.now());
 	    Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
-	    System.out.println(fakeUser.getAboutMe());
 	    
 	    Mockito.when(mockRequest.getParameter("aboutme")).thenReturn("test_aboutme");
 	    
