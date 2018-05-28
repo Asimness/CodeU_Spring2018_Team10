@@ -23,6 +23,7 @@ public class User {
   private final String name;
   private final String passwordHash;
   private final Instant creation;
+  private boolean admin;
 
   /**
    * Constructs a new User.
@@ -37,7 +38,16 @@ public class User {
     this.name = name;
     this.passwordHash = passwordHash;
     this.creation = creation;
+    admin = false;
   }
+  
+  public User(UUID id, String name, String passwordHash, Instant creation, boolean admin) {
+	    this.id = id;
+	    this.name = name;
+	    this.passwordHash = passwordHash;
+	    this.creation = creation;
+	    this.admin = admin;
+	  }
 
   /** Returns the ID of this User. */
   public UUID getId() {
@@ -57,5 +67,15 @@ public class User {
   /** Returns the creation time of this User. */
   public Instant getCreationTime() {
     return creation;
+  }
+  
+  /** Returns if the user is an admin */
+  public boolean getAdmin() {
+	  return admin;
+  }
+  
+  // To set admin afterwards
+  public void setAdmin(boolean newStatus) {
+	  admin = newStatus;
   }
 }

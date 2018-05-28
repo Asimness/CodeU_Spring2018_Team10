@@ -134,5 +134,12 @@ public class UserStore {
   public void setUsers(List<User> users) {
     this.users = users;
   }
+  
+  /*
+   * Method to return the number of users
+   */
+  public String count() {
+	  return "" + users.size();
+  }
 }
 
