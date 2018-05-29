@@ -14,12 +14,16 @@
 
 package codeu.controller;
 
+import codeu.model.data.Activity;
 import codeu.model.data.Conversation;
 import codeu.model.data.User;
+import codeu.model.store.basic.ActivityStore;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.UserStore;
 import java.io.IOException;
 import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -35,6 +39,9 @@ public class ConversationServlet extends HttpServlet {
 
   /** Store class that gives access to Conversations. */
   private ConversationStore conversationStore;
+  
+  /** Store class that gives access to Activities. */
+  private ActivityStore activityStore;
 
   /**
    * Set up state for handling conversation-related requests. This method is only called when
@@ -45,6 +52,7 @@ public class ConversationServlet extends HttpServlet {
     super.init();
     setUserStore(UserStore.getInstance());
     setConversationStore(ConversationStore.getInstance());
+    setActivityStore(ActivityStore.getInstance());
   }
 
   /**
@@ -61,6 +69,14 @@ public class ConversationServlet extends HttpServlet {
    */
   void setConversationStore(ConversationStore conversationStore) {
     this.conversationStore = conversationStore;
+  }
+  
+  /**
+   * Sets the UserStore used by this servlet. This function provides a common setup method for use
+   * by the test framework or the servlet's init() function.
+   */
+  void setActivityStore(ActivityStore activityStore) {
+    this.activityStore = activityStore;
   }
 
   /**
@@ -115,6 +131,12 @@ public class ConversationServlet extends HttpServlet {
 
     Conversation conversation =
         new Conversation(UUID.randomUUID(), user.getId(), conversationTitle, Instant.now());
+    
+    DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;
+    String activityContent = conversation.getCreationTime().atOffset(ZoneOffset.of("Z")).format(formatter) + ": " + username + " created a new conversation: " + conversation.getTitle();
+    
+    Activity activity = new Activity(UUID.randomUUID(), activityContent, user.getCreationTime());
+    activityStore.addActivity(activity);
 
     conversationStore.addConversation(conversation);
     response.sendRedirect("/chat/" + conversationTitle);

@@ -14,6 +14,7 @@
 
 package codeu.model.store.persistence;
 
+import codeu.model.data.Activity;
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
@@ -46,6 +47,37 @@ public class PersistentDataStore {
    */
   public PersistentDataStore() {
     datastore = DatastoreServiceFactory.getDatastoreService();
+  }
+  
+  /**
+   * Loads all Activity objects from the Datastore service and returns them in a List.
+   *
+   * @throws PersistentDataStoreException if an error was detected during the load from the
+   *     Datastore service
+   */
+  public List<Activity> loadActivities() throws PersistentDataStoreException {
+
+    List<Activity> activities = new ArrayList<>();
+
+    // Retrieve all activities from the datastore.
+    Query query = new Query("chat-activities");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      try {
+        UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
+        String content = (String) entity.getProperty("content");
+        Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
+        Activity activity = new Activity(uuid, content, creationTime);
+        activities.add(activity);
+      } catch (Exception e) {
+        // In a production environment, errors should be very rare. Errors which may
+        // occur include network errors, Datastore service errors, authorization errors,
+        // database entity definition mismatches, or service mismatches.
+        throw new PersistentDataStoreException(e);
+      }
+    }
+    return activities;
   }
 
   /**
@@ -112,7 +144,6 @@ public class PersistentDataStore {
         throw new PersistentDataStoreException(e);
       }
     }
-
     return conversations;
   }
 
@@ -149,6 +180,15 @@ public class PersistentDataStore {
     }
 
     return messages;
+  }
+  
+  /** Write an Activity object to the Datastore service. */
+  public void writeThrough(Activity activity) {
+    Entity userEntity = new Entity("chat-activities", activity.getId().toString());
+    userEntity.setProperty("uuid", activity.getId().toString());
+    userEntity.setProperty("content", activity.getContent());
+    userEntity.setProperty("creation_time", activity.getCreationTime().toString());
+    datastore.put(userEntity);
   }
 
   /** Write a User object to the Datastore service. */
