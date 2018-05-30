@@ -39,7 +39,7 @@ import org.jsoup.safety.Whitelist;
 public class ChatServlet extends HttpServlet {
 
 	
-   /** Store class that gives access to Conversations. */
+   /** Store class that gives access to Activities. */
    private ActivityStore activityStore;	
    
   /** Store class that gives access to Conversations. */
@@ -62,7 +62,7 @@ public class ChatServlet extends HttpServlet {
   }
   
   /**
-   * Sets the ConversationStore used by this servlet. This function provides a common setup method
+   * Sets the ActivityStore used by this servlet. This function provides a common setup method
    * for use by the test framework or the servlet's init() function.
    */
   void setActivityStore(ActivityStore activityStore) {
