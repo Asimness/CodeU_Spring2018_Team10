@@ -37,7 +37,7 @@
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>GEAR Chat App</h1>
+      <h1>Awesome GEAR Chat App!</h1>
       <h2>Welcome!</h2>
 
       <ul>
