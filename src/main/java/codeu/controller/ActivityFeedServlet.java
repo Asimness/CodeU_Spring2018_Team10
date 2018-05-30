@@ -12,10 +12,10 @@ import java.util.List;
 
 public class ActivityFeedServlet extends HttpServlet {
 	
-   /** Store class that gives access to Conversations. */
+   /** Store class that gives access to Activities. */
    private ActivityStore activityStore;
 
-   /** Set up state for handling chat requests. */
+   /** Set up state for handling Activity requests. */
    @Override
    public void init() throws ServletException {
      super.init();
@@ -23,7 +23,7 @@ public class ActivityFeedServlet extends HttpServlet {
    }
 
    /**
-    * Sets the ConversationStore used by this servlet. This function provides a common setup method
+    * Sets the ActivityStore used by this servlet. This function provides a common setup method
     * for use by the test framework or the servlet's init() function.
     */
    void setActivityStore(ActivityStore conversationStore) {
