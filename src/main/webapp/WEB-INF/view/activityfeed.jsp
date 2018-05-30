@@ -55,13 +55,16 @@ List<Activity> activities = (List<Activity>) request.getAttribute("activities");
 
     <div id="messages">
       <ul>
-    <%
+    <% if(activities == null || activities.isEmpty()){ %>
+    <li>No Activities To Dispay</li>
+    <% } else { 
       for (Activity activity : activities) {
         String content = activity.getContent();
     %>
       <li><%= content %></li>
     <%
       }
+    }
     %>
       </ul>
     </div>
