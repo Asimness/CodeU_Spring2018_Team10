@@ -14,14 +14,18 @@
 
 package codeu.controller;
 
+import codeu.model.data.Activity;
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.ActivityStore;
 import java.io.IOException;
 import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -36,6 +40,10 @@ import org.kefirsf.bb.TextProcessor;
 /** Servlet class responsible for the chat page. */
 public class ChatServlet extends HttpServlet {
 
+	
+   /** Store class that gives access to Activities. */
+   private ActivityStore activityStore;	
+   
   /** Store class that gives access to Conversations. */
   private ConversationStore conversationStore;
 
@@ -52,6 +60,15 @@ public class ChatServlet extends HttpServlet {
     setConversationStore(ConversationStore.getInstance());
     setMessageStore(MessageStore.getInstance());
     setUserStore(UserStore.getInstance());
+    setActivityStore(ActivityStore.getInstance());
+  }
+  
+  /**
+   * Sets the ActivityStore used by this servlet. This function provides a common setup method
+   * for use by the test framework or the servlet's init() function.
+   */
+  void setActivityStore(ActivityStore activityStore) {
+    this.activityStore = activityStore;
   }
 
   /**
@@ -157,6 +174,12 @@ public class ChatServlet extends HttpServlet {
             Instant.now());
 
     messageStore.addMessage(message);
+    
+    DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;
+    String activityContent = message.getCreationTime().atOffset(ZoneOffset.of("Z")).format(formatter) + ": " + username + " sent a message in " + conversationTitle + ": \"" + message.getContent() + "\"";
+    
+    Activity activity = new Activity(UUID.randomUUID(), activityContent, user.getCreationTime());
+    activityStore.addActivity(activity);
 
     // redirect to a GET request
     response.sendRedirect("/chat/" + conversationTitle);

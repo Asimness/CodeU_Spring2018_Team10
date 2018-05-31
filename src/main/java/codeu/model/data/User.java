@@ -22,8 +22,27 @@ public class User {
   private final UUID id;
   private final String name;
   private final String passwordHash;
+  private String aboutme;
   private final Instant creation;
+  private boolean admin;
 
+  /**
+   * Constructs a new User.
+   *
+   * @param id the ID of this User
+   * @param name the username of this User
+   * @param passwordHash the password of this User
+   * @param aboutme the about me of this user
+   * @param creation the creation time of this User
+   */
+  public User(UUID id, String name, String passwordHash, String aboutme ,Instant creation) {
+    this.id = id;
+    this.name = name;
+    this.passwordHash = passwordHash;
+    this.creation = creation;
+    this.aboutme = aboutme;
+  }
+  
   /**
    * Constructs a new User.
    *
@@ -36,8 +55,18 @@ public class User {
     this.id = id;
     this.name = name;
     this.passwordHash = passwordHash;
+    this.aboutme = "";
     this.creation = creation;
+    admin = false;
   }
+  
+  public User(UUID id, String name, String passwordHash, Instant creation, boolean admin) {
+	    this.id = id;
+	    this.name = name;
+	    this.passwordHash = passwordHash;
+	    this.creation = creation;
+	    this.admin = admin;
+	  }
 
   /** Returns the ID of this User. */
   public UUID getId() {
@@ -53,9 +82,29 @@ public class User {
   public String getPasswordHash() {
     return passwordHash;
   }
+  
+  /** Returns the aboutme of this User. */
+  public String getAboutMe() {
+    return aboutme;
+  }
+  
+  /** Sets the aboutme of this user. */
+  public void setAboutMe(String aboutme) {
+	  this.aboutme = aboutme;
+  }
 
   /** Returns the creation time of this User. */
   public Instant getCreationTime() {
     return creation;
+  }
+  
+  /** Returns if the user is an admin */
+  public boolean getAdmin() {
+	  return admin;
+  }
+  
+  // To set admin afterwards
+  public void setAdmin(boolean newStatus) {
+	  admin = newStatus;
   }
 }

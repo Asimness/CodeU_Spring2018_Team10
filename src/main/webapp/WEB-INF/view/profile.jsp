@@ -13,6 +13,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
+<%@ page import="java.util.List" %>
+<%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="codeu.model.data.User" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,39 +34,53 @@
 
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){ %>
       <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
+    <a href="/conversations">Conversations</a>
     <a href="/about.jsp">About</a>
+    <a href="/activityfeed">Activity Feed</a>
+    <a href="/adminPage">Administration</a>
   </nav>
 
   <div id="container">
     <% String url = request.getAttribute("javax.servlet.forward.request_uri").toString();
-       String user = url.substring(url.lastIndexOf('/') + 1); %>
-    <h1><%= user + "'s" %> Profile Page</h1>
+       User user = UserStore.getInstance().getUser(url.substring(url.lastIndexOf('/') + 1));
+      %>
+    <% if(user != null) { %>
+    <h1><%= user.getName() + "'s" %> Profile Page</h1>
     <hr/>
 
-    <h2>About <%= user %></h2>
-    <p>Temporary About Me</p>
-  
-    <form action="/profile" method="POST">
-        <label for="username">Edit Your About Me: </label>
+    <h2>About <%= user.getName() %></h2>
+    <% if (user.getAboutMe() != null && !user.getAboutMe().equals("")) { %>
+    <p><%= user.getAboutMe() %></p>
+    <% } else { %>
+    <p>Oops, Empty About Me!</p>
+    <% } %>
+     
+    <% if (request.getSession().getAttribute("user") != null && 
+      user.getName().equals(request.getSession().getAttribute("user"))) { %>
+    <form action="" method="POST">
+        <label for="EditAboutMe">Edit Your About Me: </label>
         <br/>
-        <textarea rows="8" cols="50" type="text" name="AboutMe" id="AboutMe"></textarea>
+        <textarea rows="8" cols="50" type="text" name="aboutme" id="aboutme"></textarea>
         <br/>
         <button type="submit">Submit</button>
     </form>
+    <% } else {} %>
     <hr/>
 
-    <h3><%= user + "'s"%> Sent Messages</h3>
+    <h3><%= user.getName() + "'s"%> Sent Messages</h3>
     <div id="messages">
       <ul>
        <li>Demo Message</li>
       </ul>
     </div>
+    <% } else { %>
+      <p>User Does Not Exist</p>
+    <% } %>
   </div>
 </body>
 </html>

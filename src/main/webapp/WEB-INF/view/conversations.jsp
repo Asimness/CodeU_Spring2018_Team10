@@ -33,9 +33,10 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
-	<a href="/activityfeed">Activity Feed</a>  
-	</nav>
-
+    <a href="/activityfeed">Activity Feed</a>
+    <a href="/adminPage">Administration</a>
+  </nav>
+  
   <div id="container">
 
     <% if(request.getAttribute("error") != null){ %>
