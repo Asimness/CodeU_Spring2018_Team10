@@ -14,6 +14,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
+<%@ page import="java.util.List" %>
+<%@ page import="codeu.model.data.Activity" %>
+<%@ page import="codeu.model.store.basic.ActivityStore" %>
+<%
+List<Activity> activities = (List<Activity>) request.getAttribute("activities");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +48,27 @@
     <a href="/activityfeed">Activity Feed</a>
   </nav>
   
-  <H1> WELCOME TO ACTIVITY FEED </H1>
+  <div id="container">
+    <h1>ACTIVITY FEED</h1>
+    <p>A list of everything that has happened on the site so far!</p>
+    <hr/>
 
+    <div id="messages">
+      <ul>
+    <% if(activities == null || activities.isEmpty()){ %>
+    <li>No Activities To Dispay</li>
+    <% } else { 
+      for (Activity activity : activities) {
+        String content = activity.getContent();
+    %>
+      <li><%= content %></li>
+    <%
+      }
+    }
+    %>
+      </ul>
+    </div>
+  </div>
+ 
 </body>
 </html>
