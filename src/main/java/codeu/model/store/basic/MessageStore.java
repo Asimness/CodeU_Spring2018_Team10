@@ -97,4 +97,11 @@ public class MessageStore {
   public void setMessages(List<Message> messages) {
     this.messages = messages;
   }
+  
+  /*
+   * Method that returns the number of messages
+   */
+  public String count() {
+	  return "" + messages.size();
+  }
 }
