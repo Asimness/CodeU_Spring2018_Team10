@@ -37,16 +37,22 @@
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>Awesome GEAR Chat App!</h1>
-      <h2>Welcome!</h2>
+      <h1>Welcome to the GEAR Chat App!</h1>
+      
+      <p>
+      <a href="/login">Login</a> to create an account and get started chatting!
+      </p>
+      
+      <p>
+      Check out the <a href="/conversations">conversations</a> page to
+            start a conversation or find a conversation you would like to join!
+      </p>
+      
+      <p>
+      Want to know the features of this app? Check out the <a href="/about.jsp">about</a> page!
+        It contains a list of features and tips to make your conversations more fun and creative.
+      </p>
 
-      <ul>
-        <li><a href="/login">Login</a> to get started.</li>
-        <li>Go to the <a href="/conversations">conversations</a> page to
-            create or join a conversation.</li>
-        <li>View the <a href="/about.jsp">about</a> page to learn more about the
-            project.</li>
-      </ul>
     </div>
   </div>
 </body>
