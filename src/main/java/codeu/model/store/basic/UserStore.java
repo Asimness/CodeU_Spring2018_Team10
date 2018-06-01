@@ -139,7 +139,7 @@ public class UserStore {
    * Method to return the number of users
    */
   public String count() {
-	  return "" + users.size();
+	  return String.valueOf(users.size());
   }
 }
 
