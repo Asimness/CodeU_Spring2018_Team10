@@ -10,21 +10,26 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
+<%@ page import="codeu.model.data.User" %>
+<%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="java.util.Map" %>
+<% Map<String, String> stats = (Map<String, String>) request.getAttribute("stats"); %>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Admin Page</title>
   <link rel="stylesheet" href="/css/main.css">
   <style>
-    #messages {
+    #messsages {
       background-color: white;
       height: 500px;
       overflow-y: scroll
     }
   </style>
 </head>
-<body>
 
+<body>
+  
   <nav>
     <a id="navTitle" href="/">Gear Chat App</a>
     <a href="/conversations">Conversations</a>
@@ -41,15 +46,36 @@
   </nav>
 
   <div id="container">
-    <% String url = request.getAttribute("javax.servlet.forward.request_uri").toString();%>
-    <h1>Admin Page</h1>
-    <hr/>
-
-    <h2>Admin Page</h2>
-    <p>Temporary Admin Page</p>
-
-    <hr/>
-    </div>
+    <% if (request.getSession().getAttribute("user") != null) { %>
+      <% System.out.println();
+         String username = (String) request.getSession().getAttribute("user");
+         User user = (User) UserStore.getInstance().getUser(username);
+         if (user.getName().equals("eden")) {
+           user.setAdmin(true);
+         }
+         System.out.println("The user attribute is NOT empty");
+         System.out.println("The user is " + username);
+         System.out.println(); %>
+      <% if (user.getAdmin()) { %>
+        <h1>Administration</h1>
+        <h2>Welcome <%= username%>, here are some site statistics</h2>
+        <ul>
+          <% for (String key : stats.keySet()) { %>
+            <li><%= key %>: <%= stats.get(key) %></li>
+          <% } %>
+        </ul>
+      <% } else { %>
+        <h1>Administration</h1>
+        <h2>Access Denied</h2>
+        <p>Log in with an administrator account to view this page</p>
+      <% } %>
+    <% } else { %>
+      <% System.out.println();
+         System.out.println("The user attribute IS empty");
+         System.out.println(); %>
+      <h1>Log In Required</h1>
+      <p>Please login with an administrator account to view this page.</p>
+    <% } %>
   </div>
 </body>
 </html>
