@@ -105,6 +105,6 @@ public class ConversationStore {
    * Method to return the number of conversations
    */
   public String count() {
-	  return "" + conversations.size();
+	  return String.valueOf(conversations.size());
   }
 }
