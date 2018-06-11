@@ -37,6 +37,8 @@ import org.jsoup.safety.Whitelist;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.TextProcessor;
 
+import com.vdurmont.emoji.EmojiParser;
+
 /** Servlet class responsible for the chat page. */
 public class ChatServlet extends HttpServlet {
 
@@ -163,14 +165,18 @@ public class ChatServlet extends HttpServlet {
     
     // this removes any HTML from the message content
     String cleanedMessageContent = processor.process(Jsoup.clean(messageContent, Whitelist.none()));
-
+    
+    
+    
+    String emojis = EmojiParser.parseToUnicode(cleanedMessageContent);
+    
     Message message =
         new Message(
             UUID.randomUUID(),
             conversation.getId(),
             user.getId(),
             //displays the edited message
-            cleanedMessageContent,
+            emojis,
             Instant.now());
 
     messageStore.addMessage(message);
