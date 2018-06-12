@@ -53,6 +53,16 @@
       %>
     <% if(user != null) { %>
     <h1><%= user.getName() + "'s" %> Profile Page</h1>
+    <img src="../images/temp.jpg" alt="temp"/>
+    <% if (request.getSession().getAttribute("user") != null && 
+      user.getName().equals(request.getSession().getAttribute("user"))) { %>
+    <form action="" method="POST">
+        <label for="EditProfilePicture">Edit Your Profile Picture: </label>
+        <br/>
+        <br/>
+        <button type="submit" name="EditProfilePage" value="EditProfilePicture">Upload</button>
+    </form>
+    <% } else {} %>
     <hr/>
 
     <h2>About <%= user.getName() %></h2>
@@ -69,7 +79,7 @@
         <br/>
         <textarea rows="8" cols="50" type="text" name="aboutme" id="aboutme"></textarea>
         <br/>
-        <button type="submit">Submit</button>
+        <button type="submit" name="EditProfilePage" value="EditAboutMe">Submit</button>
     </form>
     <% } else {} %>
     <hr/>

@@ -54,7 +54,10 @@ public class ProfileServlet extends HttpServlet{
 
 	// Gets the name of the user that is currently logged in  
 	String username = (String) request.getSession().getAttribute("user");
-
+	String action = (String) request.getParameter("EditProfilePage");
+	
+	if (action.equals("EditAboutMe")) {
+		System.out.println(action);
 	// Gets the text submitted by the user in the aboutme form
     String aboutMe = request.getParameter("aboutme");
     
@@ -64,5 +67,9 @@ public class ProfileServlet extends HttpServlet{
     // Updates the user in the persistent data
     userStore.updateUser(userStore.getUser(username));
     response.sendRedirect("/user/" + username);
+	} else if (action.equals("EditProfilePicture")) {
+		System.out.println(action);
+		response.sendRedirect("/user/" + username);
+	}
   }
 }
