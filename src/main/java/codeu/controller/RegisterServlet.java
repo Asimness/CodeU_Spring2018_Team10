@@ -79,11 +79,34 @@ public class RegisterServlet extends HttpServlet {
       return;
     }
     
+    String gender = request.getParameter("gender");
+    if(gender.equals("Select Gender")) {
+    	request.setAttribute("error", "Please select a gender.");
+        request.getRequestDispatcher("/WEB-INF/view/register.jsp").forward(request, response);
+        return;
+    }
+    
+    String age = request.getParameter("age");
+    if (age.equals("Select Age")) {
+    	request.setAttribute("error", "Please select an age.");
+        request.getRequestDispatcher("/WEB-INF/view/register.jsp").forward(request, response);
+        return;
+    }
+    
+    String ethnicity = request.getParameter("ethnicity");
+    if (ethnicity.equals("Select One")) {
+    	request.setAttribute("error", "Please select an ethnicity.");
+        request.getRequestDispatcher("/WEB-INF/view/register.jsp").forward(request, response);
+        return;
+    }
+    
     String password = request.getParameter("password");    
     String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+    int userAge = Integer.parseInt(request.getParameter("age"));
     String aboutme = "";
+    
 
-    User user = new User(UUID.randomUUID(), username, hashed, aboutme, Instant.now());
+    User user = new User(UUID.randomUUID(), username, hashed, aboutme, Instant.now(), gender, userAge, ethnicity);
     userStore.addUser(user);
     
     DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;
