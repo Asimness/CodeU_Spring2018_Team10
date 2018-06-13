@@ -42,9 +42,7 @@
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
-    <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
-    <a href="/adminPage">Administration</a>
   </nav>
 
   <div id="container">
@@ -83,6 +81,23 @@
     <% } else { %>
       <p>User Does Not Exist</p>
     <% } %>
+  </div>
+  
+  <style>
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: left;
+  }
+  </style>
+
+  <div class="footer">
+    <nav>
+      <a href="/adminPage">Administration</a>
+      <a href="/about.jsp">About</a>
+    </nav>
   </div>
 </body>
 </html>
