@@ -43,7 +43,27 @@
         <h2 style="color:red"><%= request.getAttribute("error") %></h2>
     <% } %>
 
-    <form action="/register" method="POST">
+    <script type="text/javascript">
+      function validateForm() {
+        console.log(document.getElementById("gender").value + "");
+        console.log(document.getElementById("age").value + "");
+        console.log(document.getElementById("ethnicity").value + "");
+        if (document.getElementById("gender").value == "Select Gender") {
+          alert("Please select a gender.");
+          return false;
+        }
+        if (document.getElementById("age").value == "Select Age") {
+          alert("Please select an age.");
+          return false;
+        }
+        if(document.getElementById("ethnicity").value == "Select One") {
+          alert("Please select an ethnicity");
+          return false;
+        }
+      }
+    </script>
+
+    <form action="/register" onsubmit="return validateForm()" method="POST">
       <label for="username">Username: </label>
       <br/>
       <input type="text" name="username" id="username">
@@ -54,18 +74,19 @@
       <br/>
       <label for="gender">Gender: </label>
       <br/>
-      <select name="gender">
-        <option style="display:none;" selected>Select Gender</option>
+      <select name="gender" id="gender">
+        <option style="display:none;" selected value="Select Gender">Select Gender</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
         <option value="Other">Other</option>
         <option value="Prefer not to say">Prefer not to say</option>
       </select>
       <br/>
+
       <label for="age">Age: </label>
       <br/>
-      <select name="age">
-        <option style="display:none;" selected>Select Age</option>
+      <select name="age" id="age">
+        <option style="display:none;" selected value="Select Age">Select Age</option>
       <% int i = 1; 
          while (i < 130) {
       %>
@@ -73,10 +94,11 @@
       <% i++; } %>
       </select>
       <br/>
+
       <label for="ethnicity">Ethnicity: </label>
       <br/>
       <select class="form-control dropdown" id="ethnicity" name="ethnicity">
-        <option style="display:none;" selected="selected">Select One</option>
+        <option style="display:none;" selected="selected" value="Select One">Select One</option>
         <optgroup label="White">
           <option value="White English">English</option>
           <option value="White Welsh">Welsh</option>
