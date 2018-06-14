@@ -102,6 +102,6 @@ public class MessageStore {
    * Method that returns the number of messages
    */
   public String count() {
-	  return "" + messages.size();
+	  return String.valueOf(messages.size());
   }
 }

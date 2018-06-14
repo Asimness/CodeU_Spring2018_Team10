@@ -33,17 +33,19 @@
 <body>
 
   <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
+    <a id="navTitle" href="/">Gear Chat App</a>
+    <a href="/conversations">Conversations</a>
+    <% if(request.getSession().getAttribute("user") != null){ 
+      String userProfileName = request.getSession().getAttribute("user").toString();
+    %>
+      <a href="/user/<%= userProfileName %>">Hello <%= request.getSession().getAttribute("user") %>!</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
-    <a href="/conversations">Conversations</a>
     <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
-    <a href="/adminPage">Administration</a>
     <a href = "/allConversations">All Conversations</a>
+    <a href="/adminPage">Administration</a>
   </nav>
 
   <div id="container">
@@ -52,6 +54,16 @@
       %>
     <% if(user != null) { %>
     <h1><%= user.getName() + "'s" %> Profile Page</h1>
+    <img src="../images/temp.jpg" alt="temp"/>
+    <% if (request.getSession().getAttribute("user") != null && 
+      user.getName().equals(request.getSession().getAttribute("user"))) { %>
+    <form action="" method="POST">
+        <label for="EditProfilePicture">Edit Your Profile Picture: </label>
+        <br/>
+        <br/>
+        <button type="submit" name="EditProfilePage" value="EditProfilePicture">Upload</button>
+    </form>
+    <% } else {} %>
     <hr/>
 
     <h2>About <%= user.getName() %></h2>
@@ -68,7 +80,7 @@
         <br/>
         <textarea rows="8" cols="50" type="text" name="aboutme" id="aboutme"></textarea>
         <br/>
-        <button type="submit">Submit</button>
+        <button type="submit" name="EditProfilePage" value="EditAboutMe">Submit</button>
     </form>
     <% } else {} %>
     <hr/>
