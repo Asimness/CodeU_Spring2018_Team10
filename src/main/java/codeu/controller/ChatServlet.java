@@ -14,7 +14,7 @@
 
 package codeu.controller;
 
-import codeu.model.data.Activity;
+import codeu.model.data.Activity; 
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;

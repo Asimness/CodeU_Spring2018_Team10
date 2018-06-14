@@ -64,6 +64,11 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <a href="" style="float: right">&#8635;</a></h1>
 
     <hr/>
+    
+    <form>
+  <input type="radio" name="setting" value="public" checked> Public Conversation<br>
+  <input type="radio" name="setting" value="private"> Private Conversation<br>
+</form>
 
     <div id="chat">
       <ul>

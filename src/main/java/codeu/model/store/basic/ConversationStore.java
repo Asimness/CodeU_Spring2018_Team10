@@ -107,4 +107,10 @@ public class ConversationStore {
   public String count() {
 	  return "" + conversations.size();
   }
+  
+  //checks if the conversation was marked public or private
+  public boolean isConversationPrivate() {
+	  
+	return true;
+  }
 }
