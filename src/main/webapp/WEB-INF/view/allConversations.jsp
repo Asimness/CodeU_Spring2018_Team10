@@ -31,9 +31,13 @@
     <% } %>
     <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
-    <a herf = "/allConversations">All Conversations</a>
+    <a href = "/allConversations">All Conversations</a>
   </nav>
   
+  <H1>All Public Conversations</h1>
+  <input type="text" placeholder="Search..">
+  <div>
+  </div>
 
 </body>
 </html>

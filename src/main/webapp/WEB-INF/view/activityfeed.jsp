@@ -46,6 +46,7 @@ List<Activity> activities = (List<Activity>) request.getAttribute("activities");
     <% } %>
     <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
+    <a href = "/allConversations">All Conversations</a>
   </nav>
   
   <div id="container">
