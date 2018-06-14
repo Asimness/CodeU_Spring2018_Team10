@@ -13,6 +13,14 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
+
+<%@ page import="java.util.List" %>
+<%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.store.basic.ConversationStore" %>
+<%
+List<Conversation> conversations = (List<Conversation>) request.getAttribute("conversations");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +45,19 @@
   <H1>All Public Conversations</h1>
   <input type="text" placeholder="Search..">
   <div>
+  <ul>
+    <% if(conversations == null){ %>
+    <li>No public conversations</li>
+    <% } else { 
+      for (Conversation conversation : conversations) {
+        String content = conversation.getTitle();
+    %>
+      <li><%= content %></li>
+    <%
+      }
+    }
+    %>
+      </ul>
   </div>
 
 </body>
