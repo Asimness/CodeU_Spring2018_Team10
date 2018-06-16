@@ -95,22 +95,12 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <hr/>
 
   </div>
-  
-  <style>
-  .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: left;
-  }
-  </style>
 
-  <div class="footer">
+  <footer>
     <nav>
       <a href="/adminPage">Administration</a>
       <a href="/about.jsp">About</a>
     </nav>
-  </div>
+  </footer>
 </body>
 </html>

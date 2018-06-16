@@ -70,22 +70,12 @@ List<Activity> activities = (List<Activity>) request.getAttribute("activities");
       </ul>
     </div>
   </div>
- 
-  <style>
-  .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: left;
-  }
-  </style>
 
-  <div class="footer">
+  <footer>
     <nav>
       <a href="/adminPage">Administration</a>
       <a href="/about.jsp">About</a>
     </nav>
-  </div>
+  </footer>
 </body>
 </html>
