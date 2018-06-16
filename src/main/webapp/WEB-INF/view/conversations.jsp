@@ -36,6 +36,7 @@
     <% } %>
     <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
+    <a href = "/allConversations">All Conversations</a>
     <a href="/adminPage">Administration</a>
   </nav>
 

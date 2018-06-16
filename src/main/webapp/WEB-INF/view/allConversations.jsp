@@ -1,4 +1,3 @@
-
 <%--
   Copyright 2017 Google Inc.
 
@@ -14,56 +13,44 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
+
 <%@ page import="java.util.List" %>
-<%@ page import="codeu.model.data.Activity" %>
-<%@ page import="codeu.model.store.basic.ActivityStore" %>
+<%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.store.basic.ConversationStore" %>
 <%
-List<Activity> activities = (List<Activity>) request.getAttribute("activities");
+List<Conversation> conversations = (List<Conversation>) request.getAttribute("conversations");
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ActivityFeed</title>
+  <title>GEAR Chat App</title>
   <link rel="stylesheet" href="/css/main.css">
-  <style>
-    #messages {
-      background-color: white;
-      height: 500px;
-      overflow-y: scroll
-    }
-  </style>
 </head>
 <body>
 
   <nav>
-    <a id="navTitle" href="/">Gear Chat App</a>
+    <a id="navTitle" href="/">GEAR Chat App</a>
     <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ 
-      String userProfileName = request.getSession().getAttribute("user").toString();
-    %>
-      <a href="/user/<%= userProfileName %>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+    <% if(request.getSession().getAttribute("user") != null){ %>
+      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
     <a href = "/allConversations">All Conversations</a>
-    <a href="/adminPage">Administration</a>
   </nav>
   
-  <div id="container">
-    <h1>ACTIVITY FEED</h1>
-    <p>A list of everything that has happened on the site so far!</p> 
-    <hr/>
-
-    <div id="messages">
-      <ul>
-    <% if(activities == null || activities.isEmpty()){ %>
-    <li>No Activities To Display</li>
+  <H1>All Public Conversations</h1>
+  <input type="text" placeholder="Search..">
+  <div>
+  <ul>
+    <% if(conversations == null){ %>
+    <li>No public conversations</li>
     <% } else { 
-      for (Activity activity : activities) {
-        String content = activity.getContent();
+      for (Conversation conversation : conversations) {
+        String content = conversation.getTitle();
     %>
       <li><%= content %></li>
     <%
@@ -71,8 +58,7 @@ List<Activity> activities = (List<Activity>) request.getAttribute("activities");
     }
     %>
       </ul>
-    </div>
   </div>
- 
+
 </body>
 </html>
