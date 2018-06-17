@@ -68,6 +68,7 @@ public class ProfileServletTest {
 	    Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
 	    
 	    Mockito.when(mockRequest.getParameter("aboutme")).thenReturn("test_aboutme");
+	    Mockito.when(mockRequest.getParameter("EditProfilePage")).thenReturn("EditAboutMe");
 	    
 	    profileServlet.doPost(mockRequest, mockResponse);
 

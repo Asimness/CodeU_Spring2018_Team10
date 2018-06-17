@@ -31,7 +31,7 @@ public class User {
   private int age;
   private String ethnicity;
   private List<String> friends;
-
+  
   /**
    * Constructs a new User.
    *
@@ -80,7 +80,7 @@ public class User {
     this.ethnicity = ethnicity;
     friends = new ArrayList<String>();
   }
-
+  
   public User(UUID id, String name, String passwordHash, Instant creation, boolean admin) {
     this.id = id;
     this.name = name;
@@ -159,5 +159,29 @@ public class User {
 
   public void addFriend(String username) {
     friends.add(username);
+  }
+  
+  public String getGender() {
+	  return gender;
+  }
+  
+  public void setGender(String gender) {
+	  this.gender = gender;
+  }
+  
+  public int getAge() {
+	  return age;
+  }
+  
+  public void setAge(int age) {
+	  this.age = age;
+  }
+  
+  public String getEthnicity() {
+	  return ethnicity;
+  }
+  
+  public void setEthnicity(String ethnicity) {
+	  this.ethnicity = ethnicity;
   }
 }

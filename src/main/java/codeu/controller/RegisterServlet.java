@@ -79,11 +79,17 @@ public class RegisterServlet extends HttpServlet {
       return;
     }
     
+    
+    String gender = request.getParameter("gender");
+    String age = request.getParameter("age");
+    String ethnicity = request.getParameter("ethnicity");
     String password = request.getParameter("password");    
     String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+    int userAge = Integer.parseInt(request.getParameter("age"));
     String aboutme = "";
+    
 
-    User user = new User(UUID.randomUUID(), username, hashed, aboutme, Instant.now());
+    User user = new User(UUID.randomUUID(), username, hashed, aboutme, Instant.now(), gender, userAge, ethnicity);
     userStore.addUser(user);
     
     DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;
