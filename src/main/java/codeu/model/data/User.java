@@ -25,7 +25,10 @@ public class User {
   private String aboutme;
   private final Instant creation;
   private boolean admin;
-
+  private String gender;
+  private int age;
+  private String ethnicity;
+  
   /**
    * Constructs a new User.
    *
@@ -58,6 +61,18 @@ public class User {
     this.aboutme = "";
     this.creation = creation;
     admin = false;
+  }
+  
+  public User(UUID id, String name, String passwordHash, String aboutme, Instant creation, String gender, int age, String ethnicity) {
+    this.id = id;
+    this.name = name;
+    this.passwordHash = passwordHash;
+    this.aboutme = aboutme;
+    this.creation = creation;
+    admin = false;
+    this.gender = gender;
+    this.age = age;
+    this.ethnicity = ethnicity;
   }
   
   public User(UUID id, String name, String passwordHash, Instant creation, boolean admin) {
@@ -106,5 +121,29 @@ public class User {
   // To set admin afterwards
   public void setAdmin(boolean newStatus) {
 	  admin = newStatus;
+  }
+  
+  public String getGender() {
+	  return gender;
+  }
+  
+  public void setGender(String gender) {
+	  this.gender = gender;
+  }
+  
+  public int getAge() {
+	  return age;
+  }
+  
+  public void setAge(int age) {
+	  this.age = age;
+  }
+  
+  public String getEthnicity() {
+	  return ethnicity;
+  }
+  
+  public void setEthnicity(String ethnicity) {
+	  this.ethnicity = ethnicity;
   }
 }

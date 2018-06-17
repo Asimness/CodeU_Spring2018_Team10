@@ -32,6 +32,7 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/activityfeed">Activity Feed</a>
+    <a href = "/allConversations">All Conversations</a>
   </nav>
 
   <div id="container">

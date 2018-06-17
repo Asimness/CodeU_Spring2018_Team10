@@ -57,6 +57,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <a href="/login">Login</a>
     <% } %>
     <a href="/activityfeed">Activity Feed</a>
+    <a href = "/allConversations">All Conversations</a>
   </nav>
 
   <div id="container">
@@ -65,6 +66,11 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <a href="" style="float: right">&#8635;</a></h1>
 
     <hr/>
+    
+    <form>
+  <input type="radio" name="setting" value="public" checked> Public Conversation<br>
+  <input type="radio" name="setting" value="private"> Private Conversation<br>
+</form>
 
     <div id="chat">
       <ul>

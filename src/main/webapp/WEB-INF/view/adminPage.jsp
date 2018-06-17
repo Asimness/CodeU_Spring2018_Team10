@@ -40,7 +40,9 @@
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
+    <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
+    <a href = "/allConversations">All Conversations</a>
   </nav>
 
   <div id="container">
@@ -75,7 +77,6 @@
       <p>Please login with an administrator account to view this page.</p>
     <% } %>
   </div>
-
   <footer>
     <nav>
       <a href="/adminPage">Administration</a>
