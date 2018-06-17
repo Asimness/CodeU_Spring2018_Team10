@@ -42,7 +42,9 @@
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
+    <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
+    <a href = "/allConversations">All Conversations</a>
   </nav>
 
   <div id="container">
@@ -51,6 +53,16 @@
       %>
     <% if(user != null) { %>
     <h1><%= user.getName() + "'s" %> Profile Page</h1>
+    <img src="../images/temp.jpg" alt="temp"/>
+    <% if (request.getSession().getAttribute("user") != null &&
+      user.getName().equals(request.getSession().getAttribute("user"))) { %>
+    <form action="" method="POST">
+        <label for="EditProfilePicture">Edit Your Profile Picture: </label>
+        <br/>
+        <br/>
+        <button type="submit" name="EditProfilePage" value="EditProfilePicture">Upload</button>
+    </form>
+    <% } else {} %>
     <hr/>
 
     <h2>About <%= user.getName() %></h2>
@@ -59,18 +71,31 @@
     <% } else { %>
     <p>Oops, Empty About Me!</p>
     <% } %>
-     
-    <% if (request.getSession().getAttribute("user") != null && 
+
+    <% if (request.getSession().getAttribute("user") != null &&
       user.getName().equals(request.getSession().getAttribute("user"))) { %>
     <form action="" method="POST">
         <label for="EditAboutMe">Edit Your About Me: </label>
         <br/>
         <textarea rows="8" cols="50" type="text" name="aboutme" id="aboutme"></textarea>
         <br/>
-        <button type="submit">Submit</button>
+        <button type="submit" name="EditProfilePage" value="EditAboutMe">Submit</button>
     </form>
     <% } else {} %>
     <hr/>
+
+    <h2><%= user.getName() + "'s"%> Friends</h2>
+    <div id="friends">
+    <% if (user.getFriends().size() != 0) { %>
+      <% for (String friend : user.getFriends()) { %>
+      <ul>
+           <li> <%= friend %> </li>
+      </ul>
+      <% } %>
+    <% } else { %>
+      <h3>You seem to not have friends (yet!)</h3>
+    <% } %>
+    </div>
 
     <h3><%= user.getName() + "'s"%> Sent Messages</h3>
     <div id="messages">
@@ -82,7 +107,6 @@
       <p>User Does Not Exist</p>
     <% } %>
   </div>
-
   <footer>
     <nav>
       <a href="/adminPage">Administration</a>
