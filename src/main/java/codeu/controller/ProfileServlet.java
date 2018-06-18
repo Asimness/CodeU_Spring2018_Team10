@@ -1,6 +1,8 @@
 package codeu.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -69,6 +71,15 @@ public class ProfileServlet extends HttpServlet{
     response.sendRedirect("/user/" + username);
 	} else if (action.equals("EditProfilePicture")) {
 		System.out.println(action);
+		LocalDate endofCentury = LocalDate.of(2014, 01, 01);
+		LocalDate now = LocalDate.now();
+		 
+		Period diff = Period.between(endofCentury, now);
+		 
+		String s = String.format("Difference is %d years, %d months and %d days old",
+		                    diff.getYears(), diff.getMonths(), diff.getDays());
+		System.out.println(s);
+		
 		response.sendRedirect("/user/" + username);
 	}
   }
