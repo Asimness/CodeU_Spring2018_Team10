@@ -87,7 +87,21 @@
           <% for (String key : ethnicStats.keySet()) { %>
             <li><%= key %>: <%= ethnicStats.get(key) %></li>
           <% } %>
-        </ul>       
+        </ul>
+        <hr/>
+        <form action="" method="POST">
+          <label for="userAccountAge">Enter A Username To Find Out How Old Their Account Is: </label>
+          <br/>
+          <input type="text" name="userAccountAge" id="userAccountAge">
+          <br/><br/>
+        <button type="submit">Enter</button>
+      </form>
+      <% if(request.getAttribute("uAA") != null) { 
+      %>
+       <p><%= request.getAttribute("uAA")%></p>
+      <% } else { %>
+        <p></p>
+      <% } %>      
       <% } else { %>
         <h1>Administration</h1>
         <h2>Access Denied</h2>

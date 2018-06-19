@@ -21,6 +21,9 @@ import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,31 +76,7 @@ public class AdminPageServlet extends HttpServlet {
 		  this.messageStore = messageStore;
 	  }
 	  
-	 /**
-	   * Set up state for handling conversation-related requests. This method is only called when
-	   * running in a server, not when running in a test.
-	   */
-	  @Override
-	  public void init() throws ServletException {
-	    super.init();
-	    stats = new LinkedHashMap<String, String>();
-	    ageStats = new LinkedHashMap<String, String>();
-	    genderStats = new LinkedHashMap<String, String>();
-	    ethnicStats = new LinkedHashMap<String, String>();
-	    setUserStore(UserStore.getInstance());
-	    setConversationStore(ConversationStore.getInstance());
-	    setMessageStore(MessageStore.getInstance());
-	  }
-	  
-	  /*
-	   * This function fires when a user navigates to the admin page. It gets all
-	   * users, conversations, and messages from the model and forwards them to
-	   * adminpage.jsp 
-	   */
-	  @Override
-	  public void doGet(HttpServletRequest request, HttpServletResponse response)
-	  		throws IOException, ServletException {
-		  init();
+	  void setUpPage() {
 		  stats.put("Number of Users", userStore.count());
 		  stats.put("Number of Conversations", conversationStore.count());
 		  stats.put("Number of Messages", messageStore.count());
@@ -284,8 +263,36 @@ public class AdminPageServlet extends HttpServlet {
 		  ethnicStats.put("The number of Latino users is", latino + "");
 		  ethnicStats.put("The number of Native American users is", nativeAmerican + "");
 		  ethnicStats.put("The number of Pacific Islander users is", pacificIslander + "");
-		  ethnicStats.put("The number of Other users is", otherEthnic + ""); 
+		  ethnicStats.put("The number of Other users is", otherEthnic + "");
+	  }
+	  
+	 /**
+	   * Set up state for handling conversation-related requests. This method is only called when
+	   * running in a server, not when running in a test.
+	   */
+	  @Override
+	  public void init() throws ServletException {
+	    super.init();
+	    stats = new LinkedHashMap<String, String>();
+	    ageStats = new LinkedHashMap<String, String>();
+	    genderStats = new LinkedHashMap<String, String>();
+	    ethnicStats = new LinkedHashMap<String, String>();
+	    setUserStore(UserStore.getInstance());
+	    setConversationStore(ConversationStore.getInstance());
+	    setMessageStore(MessageStore.getInstance());
+	  }
+	  
+	  /*
+	   * This function fires when a user navigates to the admin page. It gets all
+	   * users, conversations, and messages from the model and forwards them to
+	   * adminpage.jsp 
+	   */
+	  @Override
+	  public void doGet(HttpServletRequest request, HttpServletResponse response)
+	  		throws IOException, ServletException {
+		  init();
 		  
+		  setUpPage();
 		  
 		  request.setAttribute("stats", stats);
 		  request.setAttribute("ageStats", ageStats);
@@ -302,7 +309,7 @@ public class AdminPageServlet extends HttpServlet {
 	  public void doPost(HttpServletRequest request, HttpServletResponse response)
 	      throws IOException, ServletException {
 		  
-		  String username = (String) request.getSession().getAttribute("username");
+		  String username = (String) request.getSession().getAttribute("user");
 		  
 		  // the user is not logged in
 		  if (username == null) {
@@ -327,6 +334,26 @@ public class AdminPageServlet extends HttpServlet {
 			  System.out.println("This user is an admin.");
 		  else
 			  System.out.println("This user is not an admin.");
+		  
+		  String usernameOfAgeAccount = (String) request.getParameter("userAccountAge");
+		  System.out.println(usernameOfAgeAccount);
+		  if(userStore.isUserRegistered(usernameOfAgeAccount)) {
+			  
+			  setUpPage();
+			  LocalDate userldt = userStore.getUser(usernameOfAgeAccount).getCreationTime().atZone(ZoneId.systemDefault()).toLocalDate();
+			  LocalDate now = LocalDate.now();
+			  Period diff = Period.between(userldt, now);
+			  String accountAge = String.format("The user '%s' is %d years, %d months and %d days old", usernameOfAgeAccount, diff.getYears(), diff.getMonths(), diff.getDays());
+			  System.out.println(accountAge);
+			  request.setAttribute("stats", stats);
+			  request.setAttribute("ageStats", ageStats);
+			  request.setAttribute("genderStats", genderStats);
+			  request.setAttribute("ethnicStats", ethnicStats);
+			  request.setAttribute("uAA", accountAge);
+			  request.getRequestDispatcher("/WEB-INF/view/adminPage.jsp").forward(request, response);
+			  return;
+		  }
+		  response.sendRedirect("/adminPage");
 	  }
 	  
 }
