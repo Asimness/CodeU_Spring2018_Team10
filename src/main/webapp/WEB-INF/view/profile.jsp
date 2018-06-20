@@ -96,6 +96,7 @@
       <h3>You seem to not have friends (yet!)</h3>
     <% } %>
     </div>
+    <hr/>
 
     <h3><%= user.getName() + "'s"%> Sent Messages</h3>
     <div id="messages">
@@ -106,7 +107,16 @@
     <% } else { %>
       <p>User Does Not Exist</p>
     <% } %>
+
+    <h3>Ad Toggle</h3>
+    <div id="ad slider">
+    <label class="switch">
+      <input type="checkbox">
+      <span class="slider round"></span>
+    </label>
+    </div>
   </div>
+
   <footer>
     <nav>
       <a href="/adminPage">Administration</a>
