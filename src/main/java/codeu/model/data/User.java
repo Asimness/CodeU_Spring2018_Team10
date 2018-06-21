@@ -133,30 +133,6 @@ public class User {
     admin = newStatus;
   }
 
-  public String getGender() {
-    return gender;
-  }
-
-  public void setGender(String gender) {
-    this.gender = gender;
-  }
-
-  public int getAge() {
-    return age;
-  }
-
-  public void setAge(int age) {
-    this.age = age;
-  }
-
-  public String getEthnicity() {
-    return ethnicity;
-  }
-
-  public void setEthnicity(String ethnicity) {
-    this.ethnicity = ethnicity;
-  }
-
   public void addFriend(String username) {
     friends.add(username);
   }
