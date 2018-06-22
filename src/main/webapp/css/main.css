@@ -56,3 +56,10 @@ input {
 button {
   font-size: 18px;
 }
+
+footer {
+  position:relative;
+  width: 100%;
+  text-align:left;
+  padding:15px 0;
+}

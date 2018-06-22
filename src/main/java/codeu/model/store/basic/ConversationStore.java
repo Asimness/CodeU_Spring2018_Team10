@@ -1,3 +1,4 @@
+
 // Copyright 2017 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -106,5 +107,11 @@ public class ConversationStore {
    */
   public String count() {
 	  return String.valueOf(conversations.size());
+  }
+  
+  //checks if the conversation was marked public or private
+  public boolean isConversationPrivate() {
+	  
+	return true;
   }
 }

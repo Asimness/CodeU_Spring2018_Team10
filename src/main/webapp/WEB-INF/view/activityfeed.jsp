@@ -46,20 +46,19 @@ List<Activity> activities = (List<Activity>) request.getAttribute("activities");
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
-    <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
-    <a href="/adminPage">Administration</a>
+    <a href = "/allConversations">All Conversations</a>
   </nav>
   
   <div id="container">
     <h1>ACTIVITY FEED</h1>
-    <p>A list of everything that has happened on the site so far!</p>
+    <p>A list of everything that has happened on the site so far!</p> 
     <hr/>
 
     <div id="messages">
       <ul>
     <% if(activities == null || activities.isEmpty()){ %>
-    <li>No Activities To Dispay</li>
+    <li>No Activities To Display</li>
     <% } else { 
       for (Activity activity : activities) {
         String content = activity.getContent();
@@ -72,6 +71,12 @@ List<Activity> activities = (List<Activity>) request.getAttribute("activities");
       </ul>
     </div>
   </div>
- 
+
+  <footer>
+    <nav>
+      <a href="/adminPage">Administration</a>
+      <a href="/about.jsp">About</a>
+    </nav>
+  </footer>
 </body>
 </html>

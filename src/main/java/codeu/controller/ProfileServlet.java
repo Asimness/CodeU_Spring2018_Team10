@@ -3,11 +3,16 @@ package codeu.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Set;
+
+import java.time.LocalDate;
+import java.time.Period;
+
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -87,6 +92,7 @@ public class ProfileServlet extends HttpServlet{
     response.sendRedirect("/user/" + username);
 	} else if (action != null && action.equals("EditProfilePicture")) {
 		System.out.println(action);
+    
 		Part file = request.getPart("pic");
 		
 		// System.out.println(filePart.getSize() + "");
@@ -102,21 +108,6 @@ public class ProfileServlet extends HttpServlet{
 		u.setProfilePic(t);
 		userStore.updateUser(u);
 		
-		/*
-		ServletContext context = request.getServletContext();
-		Set<String> resourcePaths = context.getResourcePaths("/");
-		System.out.println(resourcePaths.isEmpty());
-		for(String s : resourcePaths) {
-			System.out.println(s);
-		}
-		String fullPath = context.getRealPath("/webapp/images");
-		System.out.println(fullPath);
-		File f = new File("/images");
-		System.out.println(f.mkdirs());
-		System.out.println(f.getAbsolutePath());
-		System.out.println(f.getPath());
-		filePart.write(f.getPath());
-		*/
 		response.sendRedirect("/user/" + username);
 	}
   }
