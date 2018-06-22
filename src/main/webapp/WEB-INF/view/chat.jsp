@@ -83,6 +83,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     %>
       <li><strong><a href="/user/<%= author %>"><%= author %></strong></a>:<%= message.getContent() %></li>
     <%
+    	if(
       }
     %>
       </ul>
