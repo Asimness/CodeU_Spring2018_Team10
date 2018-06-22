@@ -26,6 +26,8 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Text;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +106,8 @@ public class PersistentDataStore {
         String gender = (String) entity.getProperty("gender");
         int age = ((Long) entity.getProperty("age")).intValue();
         String ethnicity = (String) entity.getProperty("ethnicity");
-        User user = new User(uuid, userName, password, aboutme, creationTime, gender, age, ethnicity);
+        Text profilePic = (Text) entity.getProperty("profilepic");
+        User user = new User(uuid, userName, password, aboutme, creationTime, gender, age, ethnicity, profilePic);
         users.add(user);
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
@@ -205,6 +208,7 @@ public class PersistentDataStore {
     userEntity.setProperty("gender", user.getGender());
     userEntity.setProperty("age", user.getAge());
     userEntity.setProperty("ethnicity", user.getEthnicity());
+    userEntity.setProperty("profilepic", user.getProfilePic());
     datastore.put(userEntity);
   }
 

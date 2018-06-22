@@ -1,17 +1,34 @@
 package codeu.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.Set;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.mindrot.jbcrypt.BCrypt;
+
+import com.google.appengine.api.datastore.Text;
+import com.google.appengine.repackaged.com.google.common.io.Files;
 
 import codeu.model.data.User;
 import codeu.model.store.basic.UserStore;
 
+
+@MultipartConfig
 public class ProfileServlet extends HttpServlet{
 	
   /** Store class that gives access to Users. */
@@ -55,20 +72,51 @@ public class ProfileServlet extends HttpServlet{
 	// Gets the name of the user that is currently logged in  
 	String username = (String) request.getSession().getAttribute("user");
 	String action = (String) request.getParameter("EditProfilePage");
+	User u = userStore.getUser(username);
 	
-	if (action.equals("EditAboutMe")) {
-		System.out.println(action);
+	if (action != null && action.equals("EditAboutMe")) {
+		
 	// Gets the text submitted by the user in the aboutme form
     String aboutMe = request.getParameter("aboutme");
-    
+    System.out.println(action);
     // Changes to the about me of the user 
     userStore.getUser(username).setAboutMe(aboutMe);
     
     // Updates the user in the persistent data
     userStore.updateUser(userStore.getUser(username));
     response.sendRedirect("/user/" + username);
-	} else if (action.equals("EditProfilePicture")) {
+	} else if (action != null && action.equals("EditProfilePicture")) {
 		System.out.println(action);
+		Part file = request.getPart("pic");
+		
+		// System.out.println(filePart.getSize() + "");
+		// String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+
+		InputStream content = file.getInputStream();
+		
+		byte[] buffer = new byte[content.available()];
+		content.read(buffer, 0, content.available());
+		
+		String base64 = Base64.getEncoder().encodeToString(buffer);
+		Text t = new Text(base64);
+		u.setProfilePic(t);
+		userStore.updateUser(u);
+		
+		/*
+		ServletContext context = request.getServletContext();
+		Set<String> resourcePaths = context.getResourcePaths("/");
+		System.out.println(resourcePaths.isEmpty());
+		for(String s : resourcePaths) {
+			System.out.println(s);
+		}
+		String fullPath = context.getRealPath("/webapp/images");
+		System.out.println(fullPath);
+		File f = new File("/images");
+		System.out.println(f.mkdirs());
+		System.out.println(f.getAbsolutePath());
+		System.out.println(f.getPath());
+		filePart.write(f.getPath());
+		*/
 		response.sendRedirect("/user/" + username);
 	}
   }
