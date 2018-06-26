@@ -124,18 +124,6 @@ public class ChatServlet extends HttpServlet {
     request.setAttribute("messages", messages);
     request.getRequestDispatcher("/WEB-INF/view/chat.jsp").forward(request, response);
   }
-  
-  public String mentionedUser(String possibleMention) {
-	  String name = "";
-	  if(possibleMention.charAt(0) == '@') {
-		name = possibleMention.split("\\s+")[0];
-		name = name.substring(1);
-		if(userStore.getUser(name) != null) {
-			return name;
-		}
-	  }
-	return name;
-  }
 
   /**
    * This function fires when a user submits the form on the chat page. It gets the logged-in
@@ -174,7 +162,7 @@ public class ChatServlet extends HttpServlet {
     TextProcessor processor = BBProcessorFactory.getInstance().create();
     
     String messageContent = request.getParameter("message");
-    String mention = mentionedUser(messageContent);
+    
     // this removes any HTML from the message content
     String cleanedMessageContent = processor.process(Jsoup.clean(messageContent, Whitelist.none()));
     
@@ -190,7 +178,7 @@ public class ChatServlet extends HttpServlet {
             //displays the edited message
             emojis,
             Instant.now());
-    System.out.println(mention);
+
     messageStore.addMessage(message);
     
     DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;
