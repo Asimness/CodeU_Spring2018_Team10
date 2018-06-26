@@ -14,6 +14,9 @@
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="java.util.Map" %>
 <% Map<String, String> stats = (Map<String, String>) request.getAttribute("stats"); %>
+<% Map<String, String> ageStats = (Map<String, String>) request.getAttribute("ageStats"); %>
+<% Map<String, String> genderStats = (Map<String, String>) request.getAttribute("genderStats"); %>
+<% Map<String, String> ethnicStats = (Map<String, String>) request.getAttribute("ethnicStats"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +46,6 @@
     <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
     <a href = "/allConversations">All Conversations</a>
-    <a href="/adminPage">Administration</a>
   </nav>
 
   <div id="container">
@@ -51,7 +53,7 @@
       <% System.out.println();
          String username = (String) request.getSession().getAttribute("user");
          User user = (User) UserStore.getInstance().getUser(username);
-         if (user.getName().equals("eden")) {
+         if (user.getName().equals("eden") || user.getName().equals("Asim")) {
            user.setAdmin(true);
          }
          System.out.println("The user attribute is NOT empty");
@@ -65,6 +67,41 @@
             <li><%= key %>: <%= stats.get(key) %></li>
           <% } %>
         </ul>
+        <hr/>
+        <h2>Here are some age statistics</h2>
+        <ul>
+          <% for (String key : ageStats.keySet()) { %>
+            <li><%= key %>: <%= ageStats.get(key) %></li>
+          <% } %>
+        </ul>
+        <hr/>
+        <h2>Here are some gender statistics</h2>
+        <ul>
+          <% for (String key : genderStats.keySet()) { %>
+            <li><%= key %>: <%= genderStats.get(key) %></li>
+          <% } %>
+        </ul>
+        <hr/>
+        <h2>Here are some ethnic statistics</h2>
+        <ul>
+          <% for (String key : ethnicStats.keySet()) { %>
+            <li><%= key %>: <%= ethnicStats.get(key) %></li>
+          <% } %>
+        </ul>
+        <hr/>
+        <form action="" method="POST">
+          <label for="userAccountAge">Enter A Username To Find Out How Old Their Account Is: </label>
+          <br/>
+          <input type="text" name="userAccountAge" id="userAccountAge">
+          <br/><br/>
+        <button type="submit">Enter</button>
+      </form>
+      <% if(request.getAttribute("uAA") != null) { 
+      %>
+       <p><%= request.getAttribute("uAA")%></p>
+      <% } else { %>
+        <p></p>
+      <% } %>      
       <% } else { %>
         <h1>Administration</h1>
         <h2>Access Denied</h2>
@@ -78,5 +115,11 @@
       <p>Please login with an administrator account to view this page.</p>
     <% } %>
   </div>
+  <footer>
+    <nav>
+      <a href="/adminPage">Administration</a>
+      <a href="/about.jsp">About</a>
+    </nav>
+  </footer>
 </body>
 </html>

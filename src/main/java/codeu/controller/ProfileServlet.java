@@ -1,6 +1,8 @@
 package codeu.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -69,6 +71,7 @@ public class ProfileServlet extends HttpServlet{
     response.sendRedirect("/user/" + username);
 	} else if (action.equals("EditProfilePicture")) {
 		System.out.println(action);
+		
 		response.sendRedirect("/user/" + username);
 	}
   }

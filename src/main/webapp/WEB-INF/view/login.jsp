@@ -31,11 +31,8 @@
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
-    <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
     <a href = "/allConversations">All Conversations</a>
-    <a href="/adminPage">Administration</a>
-    
   </nav>
 
   <div id="container">
@@ -59,5 +56,12 @@
 
     <p>New users can register <a href="/register">here</a>.</p>
   </div>
+
+  <footer>
+    <nav>
+      <a href="/adminPage">Administration</a>
+      <a href="/about.jsp">About</a>
+    </nav>
+  </footer>
 </body>
 </html>

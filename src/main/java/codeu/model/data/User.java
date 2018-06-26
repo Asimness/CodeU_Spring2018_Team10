@@ -15,6 +15,8 @@
 package codeu.model.data;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /** Class representing a registered user. */
@@ -28,6 +30,7 @@ public class User {
   private String gender;
   private int age;
   private String ethnicity;
+  private List<String> friends;
   
   /**
    * Constructs a new User.
@@ -44,8 +47,9 @@ public class User {
     this.passwordHash = passwordHash;
     this.creation = creation;
     this.aboutme = aboutme;
+    friends = new ArrayList();
   }
-  
+
   /**
    * Constructs a new User.
    *
@@ -61,8 +65,9 @@ public class User {
     this.aboutme = "";
     this.creation = creation;
     admin = false;
+    friends = new ArrayList<String>();
   }
-  
+
   public User(UUID id, String name, String passwordHash, String aboutme, Instant creation, String gender, int age, String ethnicity) {
     this.id = id;
     this.name = name;
@@ -73,15 +78,17 @@ public class User {
     this.gender = gender;
     this.age = age;
     this.ethnicity = ethnicity;
+    friends = new ArrayList<String>();
   }
   
   public User(UUID id, String name, String passwordHash, Instant creation, boolean admin) {
-	    this.id = id;
-	    this.name = name;
-	    this.passwordHash = passwordHash;
-	    this.creation = creation;
-	    this.admin = admin;
-	  }
+    this.id = id;
+    this.name = name;
+    this.passwordHash = passwordHash;
+    this.creation = creation;
+    this.admin = admin;
+    friends = new ArrayList<String>();
+  }
 
   /** Returns the ID of this User. */
   public UUID getId() {
@@ -92,35 +99,42 @@ public class User {
   public String getName() {
     return name;
   }
-  
+
   /** Returns the password hash of this User. */
   public String getPasswordHash() {
     return passwordHash;
   }
-  
+
   /** Returns the aboutme of this User. */
   public String getAboutMe() {
     return aboutme;
   }
-  
+
   /** Sets the aboutme of this user. */
   public void setAboutMe(String aboutme) {
-	  this.aboutme = aboutme;
+    this.aboutme = aboutme;
   }
 
   /** Returns the creation time of this User. */
   public Instant getCreationTime() {
     return creation;
   }
-  
+
   /** Returns if the user is an admin */
   public boolean getAdmin() {
-	  return admin;
+    return admin;
   }
-  
+
+  /** Returns a list of the user's friends*/
+  public List<String> getFriends() { return friends; }
+
   // To set admin afterwards
   public void setAdmin(boolean newStatus) {
-	  admin = newStatus;
+    admin = newStatus;
+  }
+
+  public void addFriend(String username) {
+    friends.add(username);
   }
   
   public String getGender() {
