@@ -17,9 +17,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
-<%
-List<Conversation> conversations = (List<Conversation>) request.getAttribute("conversations");
-%>
 
 <!DOCTYPE html>
 <html>
@@ -45,19 +42,32 @@ List<Conversation> conversations = (List<Conversation>) request.getAttribute("co
   <H1>All Public Conversations</h1>
   <input type="text" placeholder="Search..">
   <div>
-  <ul>
-    <% if(conversations == null){ %>
-    <li>No public conversations</li>
-    <% } else { 
-      for (Conversation conversation : conversations) {
-        String content = conversation.getTitle();
+    <h1>Conversations</h1>
+
+    <%
+    List<Conversation> conversations =
+      (List<Conversation>) request.getAttribute("conversations");
+    if(conversations == null || conversations.isEmpty()){
     %>
-      <li><%= content %></li>
+      <p>Create a conversation to get started.</p>
+    <%
+    }
+    else{
+    %>
+      <ul class="mdl-list">
+    <%
+      for(Conversation conversation : conversations){
+    %>
+      <li><a href="/chat/<%= conversation.getTitle() %>">
+        <%= conversation.getTitle() %></a></li>
     <%
       }
-    }
     %>
       </ul>
+    <%
+    }
+    %>
+    <hr/>
   </div>
 
 </body>
