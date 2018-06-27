@@ -13,9 +13,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.*" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.data.User" %>
+<%@ page import="com.google.appengine.api.datastore.Text" %>
 
 <!DOCTYPE html>
 <html>
@@ -53,13 +54,22 @@
       %>
     <% if(user != null) { %>
     <h1><%= user.getName() + "'s" %> Profile Page</h1>
-    <img src="../images/temp.jpg" alt="temp"/>
-    <% if (request.getSession().getAttribute("user") != null &&
+
+    <!-- <img src="data:image/jpeg;base64,<%= user.getProfilePic() %>" alt="temp" width="250" /> <-->
+    <% if (user.getProfilePic() == null) { %>
+      <img src="../images/temp.jpg" alt="temp"/>
+    <% } else { %>
+      <img src="data:image/jpeg;base64,<%= user.getProfilePic().getValue() %>" alt="temp" width="250" />
+    <% } %>
+
+    <% if (request.getSession().getAttribute("user") != null && 
+           
       user.getName().equals(request.getSession().getAttribute("user"))) { %>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         <label for="EditProfilePicture">Edit Your Profile Picture: </label>
         <br/>
         <br/>
+        <input type="file" name="pic" accept="image/*">
         <button type="submit" name="EditProfilePage" value="EditProfilePicture">Upload</button>
     </form>
     <% } else {} %>
@@ -80,6 +90,7 @@
         <textarea rows="8" cols="50" type="text" name="aboutme" id="aboutme"></textarea>
         <br/>
         <button type="submit" name="EditProfilePage" value="EditAboutMe">Submit</button>
+        <param name="test" value="text">
     </form>
     <% } else {} %>
     <hr/>

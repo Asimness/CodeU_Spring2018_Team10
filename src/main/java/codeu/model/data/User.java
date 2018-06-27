@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.google.appengine.api.datastore.Text;
+
 /** Class representing a registered user. */
 public class User {
   private final UUID id;
@@ -30,7 +32,9 @@ public class User {
   private String gender;
   private int age;
   private String ethnicity;
+  private Text profilePic;
   private List<String> friends;
+
   
   /**
    * Constructs a new User.
@@ -80,6 +84,19 @@ public class User {
     this.ethnicity = ethnicity;
     friends = new ArrayList<String>();
   }
+  
+  public User(UUID id, String name, String passwordHash, String aboutme, Instant creation, String gender, int age, String ethnicity, Text profilePic) {
+	    this.id = id;
+	    this.name = name;
+	    this.passwordHash = passwordHash;
+	    this.aboutme = aboutme;
+	    this.creation = creation;
+	    admin = false;
+	    this.gender = gender;
+	    this.age = age;
+	    this.ethnicity = ethnicity;
+	    this.profilePic = profilePic;
+	  }
   
   public User(UUID id, String name, String passwordHash, Instant creation, boolean admin) {
     this.id = id;
@@ -159,5 +176,13 @@ public class User {
   
   public void setEthnicity(String ethnicity) {
 	  this.ethnicity = ethnicity;
+  }
+  
+  public Text getProfilePic() {
+	  return profilePic;
+  }
+  
+  public void setProfilePic(Text profilePic) {
+	  this.profilePic = profilePic;
   }
 }
