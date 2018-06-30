@@ -51,7 +51,7 @@ public class User {
     this.passwordHash = passwordHash;
     this.creation = creation;
     this.aboutme = aboutme;
-    friends = new ArrayList();
+    friends = new ArrayList<String>();
   }
 
   /**
