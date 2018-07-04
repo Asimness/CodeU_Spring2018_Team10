@@ -58,8 +58,10 @@
     <%
       for(Conversation conversation : conversations){
     %>
+    <%if(conversation.getPublicStatus()){%>
       <li><a href="/chat/<%= conversation.getTitle() %>">
         <%= conversation.getTitle() %></a></li>
+     <% } %>
     <%
       }
     %>

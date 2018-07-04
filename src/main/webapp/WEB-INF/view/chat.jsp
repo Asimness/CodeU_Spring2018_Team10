@@ -63,11 +63,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <a href="" style="float: right">&#8635;</a></h1>
 
     <hr/>
-    
-    <form>
-  <input type="radio" name="setting" value="public" checked> Public Conversation<br>
-  <input type="radio" name="setting" value="private"> Private Conversation<br>
-</form>
+
+
 
     <div id="chat">
       <ul>
@@ -90,6 +87,10 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
         <input type="text" name="message">
         <br/>
         <button type="submit">Send</button>
+        <br/>
+        <input type="radio" name="privacy" value="public" checked> Public Conversation<br>
+  		<input type="radio" name="privacy" value="private"> Private Conversation<br>
+  		<br/>
     </form>
     <% } else { %>
       <p><a href="/login">Login</a> to send a message.</p>
