@@ -73,6 +73,7 @@
     else{
     %>
       <ul class="mdl-list">
+      
     <%
       for(Conversation conversation : conversations){
       if(request.getSession().getAttribute("user") != null){
