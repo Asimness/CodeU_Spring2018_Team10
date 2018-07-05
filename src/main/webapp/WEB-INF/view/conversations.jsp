@@ -15,6 +15,8 @@
 --%>
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="codeu.model.data.User" %>
 
 <!DOCTYPE html>
 <html>
@@ -58,7 +60,7 @@
       <hr/>
     <% } %>
 
-    <h1>Conversations</h1>
+    <h1>Your Conversations</h1>
 
     <%
     List<Conversation> conversations =
@@ -73,13 +75,22 @@
       <ul class="mdl-list">
     <%
       for(Conversation conversation : conversations){
-    %>
+      if(request.getSession().getAttribute("user") != null){
+      	User user = UserStore.getInstance().getUser(request.getSession().getAttribute("user").toString());	
+		if(conversation.getOwnerId() == user.getId()) { %>
       <li><a href="/chat/<%= conversation.getTitle() %>">
         <%= conversation.getTitle() %></a></li>
     <%
       }
     %>
+    
+    <%
+      }
+    %>
       </ul>
+      <%
+      }
+    %>
     <%
     }
     %>
