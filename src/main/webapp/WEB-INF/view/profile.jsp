@@ -95,9 +95,9 @@
     <% } else {} %>
     <hr/>
 
-    <h2><%= user.getName() + "'s"%> Friends</h2>
+    <h2><%= user.getName() + "'s" %> Friends</h2>
     <div id="friends">
-    <% if (user.getFriends().size() != 0) { %>
+    <% if (user.getFriends() != null && user.getFriends().size() != 0) { %>
       <% for (String friend : user.getFriends()) { %>
       <ul>
            <li> <%= friend %> </li>

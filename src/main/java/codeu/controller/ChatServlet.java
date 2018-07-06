@@ -16,16 +16,21 @@ package codeu.controller;
 
 import codeu.model.data.Activity; 
 import codeu.model.data.Conversation;
+import codeu.model.data.Edge;
 import codeu.model.data.Message;
+import codeu.model.data.TestGraph;
 import codeu.model.data.User;
+import codeu.model.data.Vertex;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.VertexStore;
 import codeu.model.store.basic.ActivityStore;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -42,6 +47,8 @@ import com.vdurmont.emoji.EmojiParser;
 /** Servlet class responsible for the chat page. */
 public class ChatServlet extends HttpServlet {
 
+   /** Store class that gives access to Users. */
+   private VertexStore vertexStore;
 	
    /** Store class that gives access to Activities. */
    private ActivityStore activityStore;	
@@ -63,6 +70,16 @@ public class ChatServlet extends HttpServlet {
     setMessageStore(MessageStore.getInstance());
     setUserStore(UserStore.getInstance());
     setActivityStore(ActivityStore.getInstance());
+    setVertexStore(VertexStore.getInstance());
+  }
+  
+  
+  /**
+   * Sets the ActivityStore used by this servlet. This function provides a common setup method
+   * for use by the test framework or the servlet's init() function.
+   */
+  void setVertexStore(VertexStore vertexStore) {
+    this.vertexStore = vertexStore;
   }
   
   /**
@@ -186,6 +203,43 @@ public class ChatServlet extends HttpServlet {
     
     Activity activity = new Activity(UUID.randomUUID(), activityContent, user.getCreationTime());
     activityStore.addActivity(activity);
+    
+    
+    UUID ownerUUID = conversation.getOwnerId();
+    User userOwner = userStore.getUser(ownerUUID);
+    String owner = "";
+    try {
+    	owner = userOwner.getName();
+    }catch(Exception e) {
+    	
+    }
+    
+    UUID msgerUUID = message.getAuthorId();
+    User userMsger = userStore.getUser(msgerUUID);
+    String msger = "";
+    try {
+    	msger = userMsger.getName();
+    }catch(Exception e) {
+    	
+    }
+    
+    if(!vertexStore.getVertexList().contains(owner + "|" + msger + "|" + "1" + "|" + "1")) {
+    	vertexStore.addVertex(owner + "|" + msger + "|" + "1" + "|" + "1");
+    }
+    
+    if(!vertexStore.getVertexList().contains(msger + "|" + owner + "|" + "1" + "|" + "1")) {
+    	vertexStore.addVertex(msger + "|" + owner + "|" + "1" + "|" + "1");
+    }
+    
+    ArrayList<String> s = new ArrayList<>();
+    s.add("A|R|T");
+    
+    for(String w : vertexStore.getVertexList()) {
+    	System.out.println(w);
+    }
+    
+    TestGraph tg = new TestGraph(vertexStore.getVertexList(), s);
+    System.out.println(tg.setUp());
 
     // redirect to a GET request
     response.sendRedirect("/chat/" + conversationTitle);

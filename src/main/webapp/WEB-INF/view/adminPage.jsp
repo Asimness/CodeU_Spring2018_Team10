@@ -94,14 +94,37 @@
           <br/>
           <input type="text" name="userAccountAge" id="userAccountAge">
           <br/><br/>
-        <button type="submit">Enter</button>
+        <button type="submit" name="adminPageAction" value="actionOne">Enter</button>
       </form>
       <% if(request.getAttribute("uAA") != null) { 
       %>
        <p><%= request.getAttribute("uAA")%></p>
       <% } else { %>
         <p></p>
-      <% } %>      
+      <% } %>   
+      <hr/>
+       <form action="" method="POST">
+          <label for="socialDegreeUserOne">Enter Username one:</label>
+          <br/>
+          <input type="text" name="socialDegreeUserOne" id="socialDegreeUserOne">
+          <br/>
+          <label for="socialDegreeUserTwo">Enter Username two:</label>
+          <br/>
+          <input type="text" name="socialDegreeUserTwo" id="socialDegreeUserTwo">
+          <br/>
+          <select name="ConvoOrFriends" id="ConvoOrFriends">
+          <option style="display:none;" selected value="C">Select By Friends or Conversations</option>
+          <option value="C">Conversations</option>
+          <option value="F">Friends</option>
+          </select>
+        <button type="submit" name="adminPageAction" value="actionTwo">Enter</button>
+      </form>
+      <% if(request.getAttribute("socialDegree") != null) { %>
+       <p><%= request.getAttribute("socialDegree")%></p>
+      <% } else { %>
+        <p>User Not Found</p>
+      <% } %>
+      <hr/>
       <% } else { %>
         <h1>Administration</h1>
         <h2>Access Denied</h2>
