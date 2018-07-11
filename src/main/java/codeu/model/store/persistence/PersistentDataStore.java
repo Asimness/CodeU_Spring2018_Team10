@@ -16,8 +16,10 @@ package codeu.model.store.persistence;
 
 import codeu.model.data.Activity;
 import codeu.model.data.Conversation;
+import codeu.model.data.Edge;
 import codeu.model.data.Message;
 import codeu.model.data.User;
+import codeu.model.data.Vertex;
 import codeu.model.store.persistence.PersistentDataStoreException;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -49,6 +51,34 @@ public class PersistentDataStore {
    */
   public PersistentDataStore() {
     datastore = DatastoreServiceFactory.getDatastoreService();
+  }
+  
+  /**
+   * Loads all Activity objects from the Datastore service and returns them in a List.
+   *
+   * @throws PersistentDataStoreException if an error was detected during the load from the
+   *     Datastore service
+   */
+  public List<String> loadVerticies() throws PersistentDataStoreException {
+
+    List<String> verticies = new ArrayList<>();
+
+    // Retrieve all activities from the datastore.
+    Query query = new Query("vertex");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      try {
+    	String name = (String) entity.getProperty("vertexname");
+        verticies.add(name);
+      } catch (Exception e) {
+        // In a production environment, errors should be very rare. Errors which may
+        // occur include network errors, Datastore service errors, authorization errors,
+        // database entity definition mismatches, or service mismatches.
+        throw new PersistentDataStoreException(e);
+      }
+    }
+    return verticies;
   }
   
   /**
@@ -231,6 +261,13 @@ public class PersistentDataStore {
     conversationEntity.setProperty("title", conversation.getTitle());
     conversationEntity.setProperty("creation_time", conversation.getCreationTime().toString());
     datastore.put(conversationEntity);
+  }
+  
+  /** Write a Vertex object to the Datastore service. */
+  public void writeThrough(String v) {
+    Entity vertexEntity = new Entity("vertex", v);
+    vertexEntity.setProperty("vertexname", v);
+    datastore.put(vertexEntity);
   }
 }
 

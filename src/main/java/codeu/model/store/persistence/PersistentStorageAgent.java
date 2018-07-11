@@ -17,6 +17,7 @@ package codeu.model.store.persistence;
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
+import codeu.model.data.Vertex;
 import codeu.model.data.Activity;
 import codeu.model.store.persistence.PersistentDataStore;
 import java.util.List;
@@ -61,6 +62,16 @@ public class PersistentStorageAgent {
   }
 
   /**
+   * Retrieve all Vertex objects from the Datastore service. The returned list may be empty.
+   *
+   * @throws PersistentDataStoreException if an error was detected during the load from the
+   *     Datastore service
+   */
+  public List<String> loadVerticies() throws PersistentDataStoreException {
+    return persistentDataStore.loadVerticies();
+  }
+  
+  /**
    * Retrieve all Activity objects from the Datastore service. The returned list may be empty.
    *
    * @throws PersistentDataStoreException if an error was detected during the load from the
@@ -98,6 +109,11 @@ public class PersistentStorageAgent {
    */
   public List<Message> loadMessages() throws PersistentDataStoreException {
     return persistentDataStore.loadMessages();
+  }
+  
+  /** Write a Vertex object to the Datastore service. */
+  public void writeThrough(String v) {
+    persistentDataStore.writeThrough(v);
   }
 
   /** Write an Activity object to the Datastore service. */
