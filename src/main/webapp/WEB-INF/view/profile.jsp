@@ -33,106 +33,112 @@
 </head>
 <body>
 
-  <nav>
-    <a id="navTitle" href="/">Gear Chat App</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ 
-      String userProfileName = request.getSession().getAttribute("user").toString();
-    %>
-      <a href="/user/<%= userProfileName %>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-    <% } %>
-    <a href="/about.jsp">About</a>
-    <a href="/activityfeed">Activity Feed</a>
-    <a href = "/allConversations">All Conversations</a>
-  </nav>
-
   <div id="container">
-    <% String url = request.getAttribute("javax.servlet.forward.request_uri").toString();
-       User user = UserStore.getInstance().getUser(url.substring(url.lastIndexOf('/') + 1));
-      %>
-    <% if(user != null) { %>
-    <h1><%= user.getName() + "'s" %> Profile Page</h1>
+      <div id="header">
+          <nav>
+            <a id="navTitle" href="/">Gear Chat App</a>
+            <a href="/conversations">Conversations</a>
+            <% if(request.getSession().getAttribute("user") != null){
+              String userProfileName = request.getSession().getAttribute("user").toString();
+            %>
+              <a href="/user/<%= userProfileName %>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+            <% } else{ %>
+              <a href="/login">Login</a>
+            <% } %>
+            <a href="/about.jsp">About</a>
+            <a href="/activityfeed">Activity Feed</a>
+            <a href = "/allConversations">All Conversations</a>
+          </nav>
+      </div>
 
-    <!-- <img src="data:image/jpeg;base64,<%= user.getProfilePic() %>" alt="temp" width="250" /> <-->
-    <% if (user.getProfilePic() == null) { %>
-      <img src="../images/temp.jpg" alt="temp"/>
-    <% } else { %>
-      <img src="data:image/jpeg;base64,<%= user.getProfilePic().getValue() %>" alt="temp" width="250" />
-    <% } %>
+      <div id="body">
+        <% String url = request.getAttribute("javax.servlet.forward.request_uri").toString();
+           User user = UserStore.getInstance().getUser(url.substring(url.lastIndexOf('/') + 1));
+          %>
+        <% if(user != null) { %>
+        <h1><%= user.getName() + "'s" %> Profile Page</h1>
 
-    <% if (request.getSession().getAttribute("user") != null && 
-           
-      user.getName().equals(request.getSession().getAttribute("user"))) { %>
-    <form action="" method="POST" enctype="multipart/form-data">
-        <label for="EditProfilePicture">Edit Your Profile Picture: </label>
-        <br/>
-        <br/>
-        <input type="file" name="pic" accept="image/*">
-        <button type="submit" name="EditProfilePage" value="EditProfilePicture">Upload</button>
-    </form>
-    <% } else {} %>
-    <hr/>
+        <!-- <img src="data:image/jpeg;base64,<%= user.getProfilePic() %>" alt="temp" width="250" /> <-->
+        <% if (user.getProfilePic() == null) { %>
+          <img src="../images/temp.jpg" alt="temp"/>
+        <% } else { %>
+          <img src="data:image/jpeg;base64,<%= user.getProfilePic().getValue() %>" alt="temp" width="250" />
+        <% } %>
 
-    <h2>About <%= user.getName() %></h2>
-    <% if (user.getAboutMe() != null && !user.getAboutMe().equals("")) { %>
-    <p><%= user.getAboutMe() %></p>
-    <% } else { %>
-    <p>Oops, Empty About Me!</p>
-    <% } %>
+        <% if (request.getSession().getAttribute("user") != null &&
 
-    <% if (request.getSession().getAttribute("user") != null &&
-      user.getName().equals(request.getSession().getAttribute("user"))) { %>
-    <form action="" method="POST">
-        <label for="EditAboutMe">Edit Your About Me: </label>
-        <br/>
-        <textarea rows="8" cols="50" type="text" name="aboutme" id="aboutme"></textarea>
-        <br/>
-        <button type="submit" name="EditProfilePage" value="EditAboutMe">Submit</button>
-        <param name="test" value="text">
-    </form>
-    <% } else {} %>
-    <hr/>
+          user.getName().equals(request.getSession().getAttribute("user"))) { %>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <label for="EditProfilePicture">Edit Your Profile Picture: </label>
+            <br/>
+            <br/>
+            <input type="file" name="pic" accept="image/*">
+            <button type="submit" name="EditProfilePage" value="EditProfilePicture">Upload</button>
+        </form>
+        <% } else {} %>
+        <hr/>
 
-    <h2><%= user.getName() + "'s"%> Friends</h2>
-    <div id="friends">
-    <% if (user.getFriends() != null && user.getFriends().size() != 0) { %>
-      <% for (String friend : user.getFriends()) { %>
-      <ul>
-           <li> <%= friend %> </li>
-      </ul>
-      <% } %>
-    <% } else { %>
-      <h3>You seem to not have friends (yet!)</h3>
-    <% } %>
-    </div>
-    <hr/>
+        <h2>About <%= user.getName() %></h2>
+        <% if (user.getAboutMe() != null && !user.getAboutMe().equals("")) { %>
+        <p><%= user.getAboutMe() %></p>
+        <% } else { %>
+        <p>Oops, Empty About Me!</p>
+        <% } %>
 
-    <h3><%= user.getName() + "'s"%> Sent Messages</h3>
-    <div id="messages">
-      <ul>
-       <li>Demo Message</li>
-      </ul>
-    </div>
-    <% } else { %>
-      <p>User Does Not Exist</p>
-    <% } %>
+        <% if (request.getSession().getAttribute("user") != null &&
+          user.getName().equals(request.getSession().getAttribute("user"))) { %>
+        <form action="" method="POST">
+            <label for="EditAboutMe">Edit Your About Me: </label>
+            <br/>
+            <textarea rows="8" cols="50" type="text" name="aboutme" id="aboutme"></textarea>
+            <br/>
+            <button type="submit" name="EditProfilePage" value="EditAboutMe">Submit</button>
+            <param name="test" value="text">
+        </form>
+        <% } else {} %>
+        <hr/>
 
-    <h3>Ad Toggle</h3>
-    <div id="ad slider">
-    <label class="switch">
-      <input type="checkbox">
-      <span class="slider round"></span>
-    </label>
-    </div>
+        <h2><%= user.getName() + "'s"%> Friends</h2>
+        <div id="friends">
+        <% if (user.getFriends() != null && user.getFriends().size() != 0) { %>
+          <% for (String friend : user.getFriends()) { %>
+          <ul>
+               <li> <%= friend %> </li>
+          </ul>
+          <% } %>
+        <% } else { %>
+          <h3>You seem to not have friends (yet!)</h3>
+        <% } %>
+        </div>
+        <hr/>
+
+        <h3><%= user.getName() + "'s"%> Sent Messages</h3>
+        <div id="messages">
+          <ul>
+           <li>Demo Message</li>
+          </ul>
+        </div>
+        <% } else { %>
+          <p>User Does Not Exist</p>
+        <% } %>
+
+        <h3>Ad Toggle</h3>
+        <div id="ad slider">
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider round"></span>
+        </label>
+        </div>
+      </div>
+
+      <div id="footer">
+          <footer>
+            <nav>
+              <a href="/adminPage">Administration</a>
+              <a href="/about.jsp">About</a>
+            </nav>
+          </footer>
+      </div>
   </div>
-
-  <footer>
-    <nav>
-      <a href="/adminPage">Administration</a>
-      <a href="/about.jsp">About</a>
-    </nav>
-  </footer>
 </body>
 </html>
