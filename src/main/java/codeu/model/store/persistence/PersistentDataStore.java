@@ -32,6 +32,7 @@ import com.google.appengine.api.datastore.Text;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -121,7 +122,7 @@ public class PersistentDataStore {
   public List<User> loadUsers() throws PersistentDataStoreException {
 
     List<User> users = new ArrayList<>();
-
+    
     // Retrieve all users from the datastore.
     Query query = new Query("chat-users");
     PreparedQuery results = datastore.prepare(query);
