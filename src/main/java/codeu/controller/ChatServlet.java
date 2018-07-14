@@ -41,7 +41,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.TextProcessor;
-
 import com.vdurmont.emoji.EmojiParser;
 
 /** Servlet class responsible for the chat page. */
@@ -113,6 +112,7 @@ public class ChatServlet extends HttpServlet {
   void setUserStore(UserStore userStore) {
     this.userStore = userStore;
   }
+ 
 
   /**
    * This function fires when a user navigates to the chat page. It gets the conversation title from
@@ -134,13 +134,14 @@ public class ChatServlet extends HttpServlet {
     }
 
     UUID conversationId = conversation.getId();
-
     List<Message> messages = messageStore.getMessagesInConversation(conversationId);
 
     request.setAttribute("conversation", conversation);
     request.setAttribute("messages", messages);
     request.getRequestDispatcher("/WEB-INF/view/chat.jsp").forward(request, response);
   }
+  
+  
 
   /**
    * This function fires when a user submits the form on the chat page. It gets the logged-in
@@ -175,11 +176,21 @@ public class ChatServlet extends HttpServlet {
       response.sendRedirect("/conversations");
       return;
     }
-
+    
+    response.setContentType("/chat/");
+    String publicConvo = request.getParameter("privacy");
+    System.out.println(publicConvo);
+    if(publicConvo != null) {
+    	if(publicConvo.equals("private")) {
+    		conversation.setPublicStatus(false);
+    	}else {
+    		conversation.setPublicStatus(true);
+    	}
+    }
+    
+    
     TextProcessor processor = BBProcessorFactory.getInstance().create();
-    
     String messageContent = request.getParameter("message");
-    
     // this removes any HTML from the message content
     String cleanedMessageContent = processor.process(Jsoup.clean(messageContent, Whitelist.none()));
     
@@ -195,7 +206,10 @@ public class ChatServlet extends HttpServlet {
             //displays the edited message
             emojis,
             Instant.now());
-
+    //if(mentionedUser(emojis) != "") {
+    //	System.out.println(mentionedUser(emojis));
+    //}
+    
     messageStore.addMessage(message);
     
     DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;

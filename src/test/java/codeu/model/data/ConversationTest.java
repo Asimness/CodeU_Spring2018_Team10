@@ -28,7 +28,7 @@ public class ConversationTest {
     String title = "Test_Title";
     Instant creation = Instant.now();
 
-    Conversation conversation = new Conversation(id, owner, title, creation);
+    Conversation conversation = new Conversation(id, owner, title, creation, true);
 
     Assert.assertEquals(id, conversation.getId());
     Assert.assertEquals(owner, conversation.getOwnerId());
