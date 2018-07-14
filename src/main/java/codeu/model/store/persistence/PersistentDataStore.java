@@ -30,6 +30,7 @@ import com.google.appengine.api.datastore.Text;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -109,6 +110,7 @@ public class PersistentDataStore {
         Text profilePic = (Text) entity.getProperty("profilepic");
         User user = new User(uuid, userName, password, aboutme, creationTime, gender, age, ethnicity, profilePic);
         users.add(user);
+        List friends = Arrays.asList(entity.getProperty("friends"));
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
         // occur include network errors, Datastore service errors, authorization errors,
@@ -209,6 +211,8 @@ public class PersistentDataStore {
     userEntity.setProperty("age", user.getAge());
     userEntity.setProperty("ethnicity", user.getEthnicity());
     userEntity.setProperty("profilepic", user.getProfilePic());
+    userEntity.setProperty("friends", user.getFriends().toString().substring(1, user.getFriends().toString().length() -
+            1));
     datastore.put(userEntity);
   }
 

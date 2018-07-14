@@ -41,6 +41,10 @@ nav a {
   font-size: 36px;
 }
 
+#header {
+  width: 100%;
+}
+
 #container {
   min-height: 100%;
   margin-left: auto;
