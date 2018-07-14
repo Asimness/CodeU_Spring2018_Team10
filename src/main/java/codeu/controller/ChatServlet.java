@@ -124,18 +124,7 @@ public class ChatServlet extends HttpServlet {
     request.getRequestDispatcher("/WEB-INF/view/chat.jsp").forward(request, response);
   }
   
-  /*public String mentionedUser(String possibleMention) {
-	  String name = "";
-	  if(possibleMention.charAt(0) == '@') {
-		name = possibleMention.split("\\s+")[0];
-		name = name.substring(1);
-		if(userStore.getUser(name) != null) {
-			return name;
-		}
-	  }
-	return name;
-  }
-  */
+  
 
   /**
    * This function fires when a user submits the form on the chat page. It gets the logged-in
