@@ -18,6 +18,7 @@ import codeu.model.data.Activity;
 import codeu.model.data.Conversation;
 import codeu.model.data.Edge;
 import codeu.model.data.Message;
+import codeu.model.data.SA;
 import codeu.model.data.TestGraph;
 import codeu.model.data.User;
 import codeu.model.data.Vertex;
@@ -186,6 +187,7 @@ public class ChatServlet extends HttpServlet {
     
     
     String emojis = EmojiParser.parseToUnicode(cleanedMessageContent);
+    SA sa = new SA();
     
     Message message =
         new Message(
@@ -196,6 +198,14 @@ public class ChatServlet extends HttpServlet {
             emojis,
             Instant.now());
 
+    try {
+    	System.out.println(sa.getSentiment(cleanedMessageContent));
+		message.setSentiment(sa.getSentiment(cleanedMessageContent));
+	} catch (Exception e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+    
     messageStore.addMessage(message);
     
     DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;

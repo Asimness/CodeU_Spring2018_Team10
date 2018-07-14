@@ -33,7 +33,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     div.card {
         width: 800px;
         background:white;
-        text-color:black;
+        text-color:rgb(250, 1, 1);
+        text-size-adjust: 16px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         text-align: left;
         margin-bottom:10px;
@@ -88,7 +89,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <div class="card">
         <strong><a href="/user/<%= author %>"><%= author %></strong></a>:<%= message.getContent() %><p/>
         <div style="background-color:grey;margin-left:-10px;">
-            <b>Like</b>------<b>Dislike</b>---------<b>Sentiment Goes Here</b>
+           <b style="font-size: 14"><%= message.getSentiment() %></b>
         </div>
        </div>
     <%
