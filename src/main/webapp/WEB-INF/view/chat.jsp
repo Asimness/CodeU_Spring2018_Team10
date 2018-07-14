@@ -33,8 +33,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     div.card {
         width: 800px;
         background:white;
-        text-color:rgb(250, 1, 1);
-        text-size-adjust: 16px;
+        text-color:black;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         text-align: left;
         margin-bottom:10px;
