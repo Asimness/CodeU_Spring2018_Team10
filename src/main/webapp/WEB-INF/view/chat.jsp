@@ -99,7 +99,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <div class="card">
         <strong><a href="/user/<%= author %>"><%= author %></strong></a>:<%= message.getContent() %><p/>
         <div style="background-color:grey;margin-left:-10px;">
-            <b>Like</b>------<b>Dislike</b>---------<b>Sentiment Goes Here</b>
+           <b style="font-size: 14"><%= message.getSentiment() %></b>
         </div>
        </div>
     <%

@@ -15,8 +15,7 @@
 package codeu.model.store.persistence;
 
 import codeu.model.data.Activity;
-import codeu.model.data.
-  ;
+import codeu.model.data.Conversation;
 import codeu.model.data.Edge;
 import codeu.model.data.Message;
 import codeu.model.data.User;
@@ -173,7 +172,7 @@ public class PersistentDataStore {
         UUID ownerUuid = UUID.fromString((String) entity.getProperty("owner_uuid"));
         String title = (String) entity.getProperty("title");
         Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
-        Conversation conversation = new Conversation(uuid, ownerUuid, title, creationTime, true);
+        Conversation conversation = new Conversation(uuid, ownerUuid, title, creationTime);
         conversations.add(conversation);
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
@@ -207,7 +206,8 @@ public class PersistentDataStore {
         UUID authorUuid = UUID.fromString((String) entity.getProperty("author_uuid"));
         Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
         String content = (String) entity.getProperty("content");
-        Message message = new Message(uuid, conversationUuid, authorUuid, content, creationTime);
+        String sentiment =  (String) entity.getProperty("sentiment");
+        Message message = new Message(uuid, conversationUuid, authorUuid, content, creationTime, sentiment);
         messages.add(message);
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
@@ -252,6 +252,7 @@ public class PersistentDataStore {
     messageEntity.setProperty("author_uuid", message.getAuthorId().toString());
     messageEntity.setProperty("content", message.getContent());
     messageEntity.setProperty("creation_time", message.getCreationTime().toString());
+    messageEntity.setProperty("sentiment", message.getSentiment());
     datastore.put(messageEntity);
   }
 
