@@ -110,7 +110,8 @@ public class PersistentDataStore {
         Text profilePic = (Text) entity.getProperty("profilepic");
         User user = new User(uuid, userName, password, aboutme, creationTime, gender, age, ethnicity, profilePic);
         users.add(user);
-        List friends = Arrays.asList(entity.getProperty("friends"));
+        String friendList = (String) entity.getProperty("friends");
+        List friends = Arrays.asList(friendList.split("\\s*,\\s*"));
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
         // occur include network errors, Datastore service errors, authorization errors,
