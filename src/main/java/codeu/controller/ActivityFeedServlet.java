@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import codeu.model.data.Activity;
 import codeu.model.store.basic.ActivityStore;
+
 import java.util.List;
 
 public class ActivityFeedServlet extends HttpServlet {

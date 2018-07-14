@@ -29,11 +29,18 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
   <link rel="stylesheet" href="/css/main.css" type="text/css">
 
   <style>
-    #chat {
-      background-color: white;
-      height: 500px;
-      overflow-y: scroll
+
+    div.card {
+        width: 800px;
+        background:white;
+        text-color:black;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        text-align: left;
+        margin-bottom:10px;
+        height:75px;
+        padding-left:10px;
     }
+
   </style>
 
   <script>
@@ -68,7 +75,6 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <hr/>
 
     <div id="chat">
-      <ul>
     <%
       for (Message message : messages) {
         String author = UserStore.getInstance()
@@ -90,12 +96,15 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       }
       }
     %>
-      <li><strong><a href="/user/<%= author %>"><%= author %></strong></a>:<%= message.getContent() %></li>
-    
+      <div class="card">
+        <strong><a href="/user/<%= author %>"><%= author %></strong></a>:<%= message.getContent() %><p/>
+        <div style="background-color:grey;margin-left:-10px;">
+            <b>Like</b>------<b>Dislike</b>---------<b>Sentiment Goes Here</b>
+        </div>
+       </div>
     <%
       }
     %>
-      </ul>
     </div>
 
     <hr/>

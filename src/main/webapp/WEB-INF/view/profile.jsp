@@ -13,14 +13,14 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.*" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.data.User" %>
+<%@ page import="com.google.appengine.api.datastore.Text" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
   <title>Profile</title>
   <link rel="stylesheet" href="/css/main.css">
   <style>
@@ -54,13 +54,22 @@
       %>
     <% if(user != null) { %>
     <h1><%= user.getName() + "'s" %> Profile Page</h1>
-    <img src="../images/temp.jpg" alt="temp"/>
-    <% if (request.getSession().getAttribute("user") != null &&
+
+    <!-- <img src="data:image/jpeg;base64,<%= user.getProfilePic() %>" alt="temp" width="250" /> <-->
+    <% if (user.getProfilePic() == null) { %>
+      <img src="../images/temp.jpg" alt="temp"/>
+    <% } else { %>
+      <img src="data:image/jpeg;base64,<%= user.getProfilePic().getValue() %>" alt="temp" width="250" />
+    <% } %>
+
+    <% if (request.getSession().getAttribute("user") != null && 
+           
       user.getName().equals(request.getSession().getAttribute("user"))) { %>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         <label for="EditProfilePicture">Edit Your Profile Picture: </label>
         <br/>
         <br/>
+        <input type="file" name="pic" accept="image/*">
         <button type="submit" name="EditProfilePage" value="EditProfilePicture">Upload</button>
     </form>
     <% } else {} %>
@@ -81,13 +90,14 @@
         <textarea rows="8" cols="50" type="text" name="aboutme" id="aboutme"></textarea>
         <br/>
         <button type="submit" name="EditProfilePage" value="EditAboutMe">Submit</button>
+        <param name="test" value="text">
     </form>
     <% } else {} %>
     <hr/>
 
-    <h2><%= user.getName() + "'s"%> Friends</h2>
+    <h2><%= user.getName() + "'s" %> Friends</h2>
     <div id="friends">
-    <% if (user.getFriends().size() != 0) { %>
+    <% if (user.getFriends() != null && user.getFriends().size() != 0) { %>
       <% for (String friend : user.getFriends()) { %>
       <ul>
            <li> <%= friend %> </li>
@@ -124,8 +134,5 @@
       <a href="/about.jsp">About</a>
     </nav>
   </footer>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 </body>
 </html>

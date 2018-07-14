@@ -17,9 +17,12 @@ package codeu.controller;
 import codeu.model.data.Conversation;
 import codeu.model.data.User;
 import codeu.model.data.Message;
+import codeu.model.data.TestGraph;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.VertexStore;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -38,6 +41,10 @@ import javax.servlet.http.HttpServletResponse;
 
 // Servlet class responsible for the Admin Page
 public class AdminPageServlet extends HttpServlet {
+	
+	
+	/** Store class that gives access to Users. */
+	private VertexStore vertexStore;
 	
 	// this stores a UserStore
 	private UserStore userStore;
@@ -74,6 +81,13 @@ public class AdminPageServlet extends HttpServlet {
 	   */
 	  void setMessageStore(MessageStore messageStore) {
 		  this.messageStore = messageStore;
+	  }
+	  
+	  /*
+	   * Sets the vertexStore used by the servlet
+	   */
+	  void setVertexStore(VertexStore vertexStore) {
+		  this.vertexStore = vertexStore;
 	  }
 	  
 	  void setUpPage() {
@@ -280,6 +294,7 @@ public class AdminPageServlet extends HttpServlet {
 	    setUserStore(UserStore.getInstance());
 	    setConversationStore(ConversationStore.getInstance());
 	    setMessageStore(MessageStore.getInstance());
+	    setVertexStore(VertexStore.getInstance());
 	  }
 	  
 	  /*
@@ -310,6 +325,8 @@ public class AdminPageServlet extends HttpServlet {
 	      throws IOException, ServletException {
 		  
 		  String username = (String) request.getSession().getAttribute("user");
+		  String action = (String) request.getParameter("adminPageAction");
+		  System.out.println(action);
 		  
 		  // the user is not logged in
 		  if (username == null) {
@@ -335,23 +352,74 @@ public class AdminPageServlet extends HttpServlet {
 		  else
 			  System.out.println("This user is not an admin.");
 		  
-		  String usernameOfAgeAccount = (String) request.getParameter("userAccountAge");
-		  System.out.println(usernameOfAgeAccount);
-		  if(userStore.isUserRegistered(usernameOfAgeAccount)) {
+		  if(action.equals("actionOne")) {
+			  String usernameOfAgeAccount = (String) request.getParameter("userAccountAge");
+			  System.out.println(usernameOfAgeAccount);
+			  if(userStore.isUserRegistered(usernameOfAgeAccount)) {
+				  
+				  setUpPage();
+				  LocalDate userldt = userStore.getUser(usernameOfAgeAccount).getCreationTime().atZone(ZoneId.systemDefault()).toLocalDate();
+				  LocalDate now = LocalDate.now();
+				  Period diff = Period.between(userldt, now);
+				  String accountAge = String.format("The user '%s' is %d years, %d months and %d days old", usernameOfAgeAccount, diff.getYears(), diff.getMonths(), diff.getDays());
+				  System.out.println(accountAge);
+				  request.setAttribute("stats", stats);
+				  request.setAttribute("ageStats", ageStats);
+				  request.setAttribute("genderStats", genderStats);
+				  request.setAttribute("ethnicStats", ethnicStats);
+				  request.setAttribute("uAA", accountAge);
+				  request.getRequestDispatcher("/WEB-INF/view/adminPage.jsp").forward(request, response);
+				  return;
+			  }else {
+				  setUpPage();
+				  
+				  String accountAge = "User Not Found!";
+				  request.setAttribute("stats", stats);
+				  request.setAttribute("ageStats", ageStats);
+				  request.setAttribute("genderStats", genderStats);
+				  request.setAttribute("ethnicStats", ethnicStats);
+				  request.setAttribute("uAA", accountAge);
+				  request.getRequestDispatcher("/WEB-INF/view/adminPage.jsp").forward(request, response);
+				  return;
+				  
+			  }
+		  }else if(action.equals("actionTwo")) {
 			  
-			  setUpPage();
-			  LocalDate userldt = userStore.getUser(usernameOfAgeAccount).getCreationTime().atZone(ZoneId.systemDefault()).toLocalDate();
-			  LocalDate now = LocalDate.now();
-			  Period diff = Period.between(userldt, now);
-			  String accountAge = String.format("The user '%s' is %d years, %d months and %d days old", usernameOfAgeAccount, diff.getYears(), diff.getMonths(), diff.getDays());
-			  System.out.println(accountAge);
-			  request.setAttribute("stats", stats);
-			  request.setAttribute("ageStats", ageStats);
-			  request.setAttribute("genderStats", genderStats);
-			  request.setAttribute("ethnicStats", ethnicStats);
-			  request.setAttribute("uAA", accountAge);
-			  request.getRequestDispatcher("/WEB-INF/view/adminPage.jsp").forward(request, response);
-			  return;
+			  String user1 = (String) request.getParameter("socialDegreeUserOne");
+			  String user2 = (String) request.getParameter("socialDegreeUserTwo");
+			  String friendOrConvo = (String) request.getParameter("ConvoOrFriends");
+			  if(userStore.isUserRegistered(user1) && userStore.isUserRegistered(user2)) {
+				  
+				  setUpPage();
+				  request.setAttribute("stats", stats);
+				  request.setAttribute("ageStats", ageStats);
+				  request.setAttribute("genderStats", genderStats);
+				  request.setAttribute("ethnicStats", ethnicStats);
+				  
+				  ArrayList<String> query = new ArrayList<>();
+				  query.clear();
+				  String queryOne = user1 + "|" + user2 + "|" + friendOrConvo;
+				  query.add(queryOne);
+			  
+				  TestGraph tg = new TestGraph(vertexStore.getVertexList(), query);
+				  String result = tg.setUp();
+				  System.out.println(result);
+				  
+				  request.setAttribute("socialDegree", result);
+				  request.getRequestDispatcher("/WEB-INF/view/adminPage.jsp").forward(request, response);
+				  return;
+			  }else {
+				  setUpPage();
+				  request.setAttribute("stats", stats);
+				  request.setAttribute("ageStats", ageStats);
+				  request.setAttribute("genderStats", genderStats);
+				  request.setAttribute("ethnicStats", ethnicStats);
+				  
+				  String result = "User Not Found";
+				  request.setAttribute("socialDegree", result);
+				  request.getRequestDispatcher("/WEB-INF/view/adminPage.jsp").forward(request, response);
+				  return;
+			  }
 		  }
 		  response.sendRedirect("/adminPage");
 	  }

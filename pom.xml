@@ -110,6 +110,19 @@
     	<artifactId>emoji-java</artifactId>
     	<version>4.0.0</version>
     </dependency>
+
+    <dependency>
+        <groupId>com.googlecode.json-simple</groupId>
+        <artifactId>json-simple</artifactId>
+        <version>1.1.1</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.paralleldots</groupId>
+        <artifactId>paralleldots</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>
