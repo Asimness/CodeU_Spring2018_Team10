@@ -44,6 +44,13 @@ public class Conversation {
     this.openConvo = true;
   }
   
+  public Conversation(UUID id, UUID owner, String title, Instant creation) {
+	    this.id = id;
+	    this.owner = owner;
+	    this.creation = creation;
+	    this.title = title;
+	    this.openConvo = true;
+	  }
 
   /** Returns the ID of this Conversation. */
   public UUID getId() {
