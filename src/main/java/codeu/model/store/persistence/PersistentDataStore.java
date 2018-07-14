@@ -273,4 +273,3 @@ public class PersistentDataStore {
     datastore.put(vertexEntity);
   }
 }
-

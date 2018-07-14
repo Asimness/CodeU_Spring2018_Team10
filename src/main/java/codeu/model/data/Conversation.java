@@ -26,6 +26,7 @@ public class Conversation {
   public final UUID owner;
   public final Instant creation;
   public final String title;
+  public boolean openConvo;
 
   /**
    * Constructs a new Conversation.
@@ -35,12 +36,14 @@ public class Conversation {
    * @param title the title of this Conversation
    * @param creation the creation time of this Conversation
    */
-  public Conversation(UUID id, UUID owner, String title, Instant creation) {
+  public Conversation(UUID id, UUID owner, String title, Instant creation, boolean open) {
     this.id = id;
     this.owner = owner;
     this.creation = creation;
     this.title = title;
+    this.openConvo = true;
   }
+  
 
   /** Returns the ID of this Conversation. */
   public UUID getId() {
@@ -60,5 +63,14 @@ public class Conversation {
   /** Returns the creation time of this Conversation. */
   public Instant getCreationTime() {
     return creation;
+  }
+  
+  /**returns if the conversation is public or private*/
+  public boolean getPublicStatus() {
+	  return openConvo;
+  }
+  
+  public void setPublicStatus(boolean status) {
+	  this.openConvo = status;
   }
 }
