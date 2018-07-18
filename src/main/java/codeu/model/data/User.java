@@ -34,6 +34,7 @@ public class User {
   private String ethnicity;
   private Text profilePic;
   private List<String> friends;
+  private String theme;
 
   
   /**
@@ -52,6 +53,7 @@ public class User {
     this.creation = creation;
     this.aboutme = aboutme;
     friends = new ArrayList<String>();
+    theme = "";
   }
 
   /**
@@ -70,6 +72,7 @@ public class User {
     this.creation = creation;
     admin = false;
     friends = new ArrayList<String>();
+    theme = "";
   }
 
   public User(UUID id, String name, String passwordHash, String aboutme, Instant creation, String gender, int age, String ethnicity) {
@@ -83,6 +86,7 @@ public class User {
     this.age = age;
     this.ethnicity = ethnicity;
     friends = new ArrayList<String>();
+    theme = "";
   }
   
   public User(UUID id, String name, String passwordHash, String aboutme, Instant creation, String gender, int age, String ethnicity, Text profilePic) {
@@ -97,6 +101,7 @@ public class User {
 	    this.ethnicity = ethnicity;
 	    this.profilePic = profilePic;
 	    friends = new ArrayList<String>();
+        theme = "";
 	  }
   
   public User(UUID id, String name, String passwordHash, Instant creation, boolean admin) {
@@ -106,6 +111,7 @@ public class User {
     this.creation = creation;
     this.admin = admin;
     friends = new ArrayList<String>();
+    theme = "";
   }
 
   /** Returns the ID of this User. */
@@ -145,6 +151,9 @@ public class User {
 
   /** Returns a list of the user's friends*/
   public List<String> getFriends() { return friends; }
+
+  /** Returns a the current theme **/
+  public String getTheme() {return theme; }
 
   // To set admin afterwards
   public void setAdmin(boolean newStatus) {
