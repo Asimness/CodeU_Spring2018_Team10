@@ -109,6 +109,27 @@ public class ProfileServlet extends HttpServlet{
 		userStore.updateUser(u);
 		
 		response.sendRedirect("/user/" + username);
-	}
+
+	} else if (action != null && action.equals("Theme")) {
+
+	    System.out.println(action);
+
+	    // Get the theme they selected
+        String selected = request.getParameter("theme");
+
+        // Set the theme variable accordingly
+        if (selected.equals("one")) {
+            u.setTheme("");
+        } else if (selected.equals("two")) {
+            u.setTheme("body{color:white;background-color:#4ABDAC;}nav{background-color:#FC4A1A;}h1{color:white;}");
+        } else if (selected.equals("three")) {
+            u.setTheme("body{color:white;background-color:#9099A2;}nav{background-color:#6d7993;}h1{color:white;}");
+        } else if (selected.equals("four")) {
+            u.setTheme("body{color:white;background-color:#636B46;}nav{background-color:#CDA34F;}h1{color:white;}");
+        }
+
+        //Send the redirect
+        response.sendRedirect("/user/" + username);
+    }
   }
 }

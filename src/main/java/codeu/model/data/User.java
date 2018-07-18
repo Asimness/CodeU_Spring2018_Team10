@@ -152,6 +152,9 @@ public class User {
   /** Returns a list of the user's friends*/
   public List<String> getFriends() { return friends; }
 
+  /** Sets the current theme **/
+  public void setTheme(String theme) {this.theme = theme; }
+
   /** Returns a the current theme **/
   public String getTheme() {return theme; }
 

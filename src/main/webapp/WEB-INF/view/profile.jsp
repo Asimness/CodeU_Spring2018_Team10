@@ -29,6 +29,11 @@
       height: 500px;
       overflow-y: scroll
     }
+    <% if (request.getSession().getAttribute("user") != null) { %>
+      <% String username = (String) request.getSession().getAttribute("user");
+         User user = (User) UserStore.getInstance().getUser(username);
+         user.getTheme(); %>
+    <% } %>
   </style>
 </head>
 <body>
@@ -113,7 +118,7 @@
       <form action="" method"POST">
           <label for="Theme">Theme: </label>
             <br/>
-              <select class="form-control dropdown" id="ethnicity" name="ethnicity">
+              <select class="form-control dropdown" id="theme" name="theme">
                 <option style="display:none;" selected="selected" value="Select One">Select One</option>
                     <option value="one">One</option>
                     <option value="two">Two</option>
