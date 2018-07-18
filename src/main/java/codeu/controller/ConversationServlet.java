@@ -128,9 +128,11 @@ public class ConversationServlet extends HttpServlet {
       response.sendRedirect("/chat/" + conversationTitle);
       return;
     }
+    
+    
 
     Conversation conversation =
-        new Conversation(UUID.randomUUID(), user.getId(), conversationTitle, Instant.now());
+        new Conversation(UUID.randomUUID(), user.getId(), conversationTitle, Instant.now(), true);
     
     DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;
     String activityContent = conversation.getCreationTime().atOffset(ZoneOffset.of("Z")).format(formatter) + ": " + username + " created a new conversation: " + conversation.getTitle();

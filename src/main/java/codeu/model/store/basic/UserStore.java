@@ -18,6 +18,8 @@ import codeu.model.data.User;
 import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,7 +59,11 @@ public class UserStore {
   private PersistentStorageAgent persistentStorageAgent;
 
   /** The in-memory list of Users. */
-  private List<User> users;
+  public List<User> users;
+  
+  
+  private HashMap<String, User> userNameSet;
+  public HashMap<UUID, User> userUUIDSet;
   
   /*
    * Method that returns a list of users
@@ -70,13 +76,31 @@ public class UserStore {
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
     users = new ArrayList<>();
+    userNameSet = new HashMap<>();
+    userUUIDSet = new HashMap<>();
+  }
+  
+  public HashMap<String, User> generateUserNameMap(List<User> users){
+	  HashMap<String, User> result = new HashMap<>();
+	  for(User u : users) {
+		  result.put(u.getName(), u);
+	  }
+	  return result;
+  }
+  
+  public HashMap<UUID, User> generateUserUUIDMap(List<User> users){
+	  HashMap<UUID, User> result = new HashMap<>();
+	  for(User u : users) {
+		  result.put(u.getId(), u);
+	  }
+	  return result;
   }
 
   /**
    * Access the User object with the given name.
    *
    * @return null if username does not match any existing User.
-   */
+   
   public User getUser(String username) {
     // This approach will be pretty slow if we have many users.
     for (User user : users) {
@@ -86,12 +110,13 @@ public class UserStore {
     }
     return null;
   }
+  */
 
   /**
    * Access the User object with the given UUID.
    *
    * @return null if the UUID does not match any existing User.
-   */
+   
   public User getUser(UUID id) {
     for (User user : users) {
       if (user.getId().equals(id)) {
@@ -100,6 +125,7 @@ public class UserStore {
     }
     return null;
   }
+  */
 
   /**
    * Add a new user to the current set of users known to the application. This should only be called
@@ -107,6 +133,7 @@ public class UserStore {
    */
   public void addUser(User user) {
     users.add(user);
+    userNameSet.put(user.getName(), user);
     persistentStorageAgent.writeThrough(user);
   }
 
@@ -117,7 +144,7 @@ public class UserStore {
     persistentStorageAgent.writeThrough(user);
   }
 
-  /** Return true if the given username is known to the application. */
+  /** Return true if the given username is known to the application. 
   public boolean isUserRegistered(String username) {
     for (User user : users) {
       if (user.getName().equals(username)) {
@@ -126,6 +153,7 @@ public class UserStore {
     }
     return false;
   }
+  */
 
   /**
    * Sets the List of Users stored by this UserStore. This should only be called once, when the data
@@ -133,6 +161,8 @@ public class UserStore {
    */
   public void setUsers(List<User> users) {
     this.users = users;
+    this.userNameSet = generateUserNameMap(users);
+    this.userUUIDSet = generateUserUUIDMap(users);
   }
   
   /*
@@ -141,5 +171,29 @@ public class UserStore {
   public String count() {
 	  return String.valueOf(users.size());
   }
+  
+  
+  public User getUser(String username) {
+	   
+	    if(userNameSet.get(username) != null) {
+	    	return userNameSet.get(username);
+	    }else {
+	    	return null;
+	    }
+   }
+  
+  public User getUser(UUID uuid) {
+	   
+	    if(userUUIDSet.get(uuid) != null) {
+	    	return userUUIDSet.get(uuid);
+	    }else {
+	    	return null;
+	    }
+   }
+  
+  public boolean isUserRegistered(String username) {
+	    return userNameSet.containsKey(username);
+  }
+  
 }
 

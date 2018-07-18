@@ -17,13 +17,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
-<%
-List<Conversation> conversations = (List<Conversation>) request.getAttribute("conversations");
-%>
 
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
   <title>GEAR Chat App</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
@@ -43,22 +41,50 @@ List<Conversation> conversations = (List<Conversation>) request.getAttribute("co
   </nav>
   
   <H1>All Public Conversations</h1>
-  <input type="text" placeholder="Search..">
+
+  
+  <% if (request.getSession().getAttribute("user") != null) { %>
+    <form action="/allConversations/" method="POST">
+        <input type="text" name = "convo" placeholder="Search..">
+        <br/>
+        <button type="submit">Send</button>
+    </form>
+    <% } else { %>
+      <p><a href="/login">Login</a> to send a message.</p>
+    <% } %>
+  
   <div>
-  <ul>
-    <% if(conversations == null){ %>
-    <li>No public conversations</li>
-    <% } else { 
-      for (Conversation conversation : conversations) {
-        String content = conversation.getTitle();
+    <h1>Conversations</h1>
+
+    <%
+    List<Conversation> conversations =
+      (List<Conversation>) request.getAttribute("conversations");
+    if(conversations == null || conversations.isEmpty()){
     %>
-      <li><%= content %></li>
+      <p>Create a conversation to get started.</p>
+    <%
+    }
+    else{
+    %>
+      <ul class="mdl-list">
+    <%
+      for(Conversation conversation : conversations){
+    %>
+    <%if(conversation.getPublicStatus()){%>
+      <li><a href="/chat/<%= conversation.getTitle() %>">
+        <%= conversation.getTitle() %></a></li>
+     <% } %>
     <%
       }
-    }
     %>
       </ul>
+    <%
+    }
+    %>
+    <hr/>
   </div>
-
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 </body>
 </html>

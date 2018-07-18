@@ -96,6 +96,7 @@ public class User {
 	    this.age = age;
 	    this.ethnicity = ethnicity;
 	    this.profilePic = profilePic;
+	    friends = new ArrayList<String>();
 	  }
   
   public User(UUID id, String name, String passwordHash, Instant creation, boolean admin) {

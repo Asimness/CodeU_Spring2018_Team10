@@ -74,7 +74,7 @@ public class ConversationServletTest {
   public void testDoGet() throws IOException, ServletException {
     List<Conversation> fakeConversationList = new ArrayList<>();
     fakeConversationList.add(
-        new Conversation(UUID.randomUUID(), UUID.randomUUID(), "test_conversation", Instant.now()));
+        new Conversation(UUID.randomUUID(), UUID.randomUUID(), "test_conversation", Instant.now(), true));
     Mockito.when(mockConversationStore.getAllConversations()).thenReturn(fakeConversationList);
 
     conversationServlet.doGet(mockRequest, mockResponse);
