@@ -109,6 +109,21 @@
     </div>
     <hr/>
 
+    <h2>Select A Theme!</h2>
+      <form action="" method"POST">
+          <label for="Theme">Theme: </label>
+            <br/>
+              <select class="form-control dropdown" id="ethnicity" name="ethnicity">
+                <option style="display:none;" selected="selected" value="Select One">Select One</option>
+                    <option value="one">One</option>
+                    <option value="two">Two</option>
+                    <option value="three">Three</option>
+                    <option value="four">Four</option>
+              </select>
+              <button type="submit">Submit</button>
+      </form>
+    </hr>
+
     <h3><%= user.getName() + "'s"%> Sent Messages</h3>
     <div id="messages">
       <ul>
