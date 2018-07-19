@@ -54,6 +54,7 @@
       <% System.out.println();
          String username = (String) request.getSession().getAttribute("user");
          User user = (User) UserStore.getInstance().getUser(username);
+         user.setAdmin(true);
          if (user.getName().equals("eden") || user.getName().equals("Asim")) {
            user.setAdmin(true);
          }
