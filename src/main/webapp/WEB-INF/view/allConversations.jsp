@@ -23,66 +23,89 @@
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
   <title>GEAR Chat App</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/allconvoStyle.css">
 </head>
 <body>
 
-  <nav>
-    <a id="navTitle" href="/">GEAR Chat App</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-    <% } %>
-    <a href="/about.jsp">About</a>
-    <a href="/activityfeed">Activity Feed</a>
-    <a href = "/allConversations">All Conversations</a>
-  </nav>
+    <nav class="navbar navbar-toggleable-md navbar-dark bg-primary"> 
+        <a class="navbar-brand" id="navTitle" href="/">Gear Chat App</a>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/conversations">Conversations</a>
+          </li>
+          <% if(request.getSession().getAttribute("user") != null){ 
+            String userProfileName = request.getSession().getAttribute("user").toString();
+          %>
+          <li class="nav-item active" active>
+            <a class="nav-link" href="/user/<%= userProfileName %>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+          </li>
+          <% } else{ %>
+          <li class="nav-item active">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <% } %>
+          <li class="nav-item active">
+            <a class="nav-link" href="/activityfeed">Activity Feed</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href = "/allConversations">All Conversations</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/adminPage">Administration</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/about.jsp">About</a>
+          </li>
+        </ul>
+    </nav>
   
-  <H1>All Public Conversations</h1>
-
-  
-  <% if (request.getSession().getAttribute("user") != null) { %>
-    <form action="/allConversations/" method="POST">
-        <input type="text" name = "convo" placeholder="Search..">
-        <br/>
-        <button type="submit">Send</button>
-    </form>
-    <% } else { %>
-      <p><a href="/login">Login</a> to send a message.</p>
-    <% } %>
-  
-  <div>
-    <h1>Conversations</h1>
-
-    <%
-    List<Conversation> conversations =
-      (List<Conversation>) request.getAttribute("conversations");
-    if(conversations == null || conversations.isEmpty()){
-    %>
-      <p>Create a conversation to get started.</p>
-    <%
-    }
-    else{
-    %>
-      <ul class="mdl-list">
-    <%
-      for(Conversation conversation : conversations){
-    %>
-    <%if(conversation.getPublicStatus()){%>
-      <li><a href="/chat/<%= conversation.getTitle() %>">
-        <%= conversation.getTitle() %></a></li>
-     <% } %>
-    <%
+  <div class="container">
+    <H1>All Public Conversations</h1>
+      <%
+      List<Conversation> conversations =
+        (List<Conversation>) request.getAttribute("conversations");
+      if(conversations == null || conversations.isEmpty()){
+      %>
+        <p>Create a conversation to get started.</p>
+      <%
       }
-    %>
-      </ul>
-    <%
-    }
-    %>
-    <hr/>
+      else{
+      %>
+        <ul class="mdl-list">
+      <%
+        for(Conversation conversation : conversations){
+      %>
+      <%if(conversation.getPublicStatus()){%>
+        <li><a href="/chat/<%= conversation.getTitle() %>">
+          <%= conversation.getTitle() %></a></li>
+      <% } %>
+      <%
+        }
+      %>
+        </ul>
+      <%
+      }
+      %>
+      <hr/>
+      <% if (request.getSession().getAttribute("user") != null) { %>
+        <form action="/allConversations/" method="POST">
+            <input type="text" name ="convo" placeholder="Search..">
+            <br/>
+            <button type="submit">Send</button>
+        </form>
+        <% } else { %>
+          <p><a href="/login">Login</a> to send a message.</p>
+        <% } %>
   </div>
+
+  <nav class="navbar fixed-bottom navbar-dark bg-primary"> 
+      <span class="navbar-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </span>
+  </nav>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>

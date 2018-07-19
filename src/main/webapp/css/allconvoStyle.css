@@ -1,0 +1,121 @@
+/* Copyright 2017 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+ body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: sans-serif;
+    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #444;
+    background-color: #eeeeee;
+  }
+  
+  nav {
+    background-color: #283593;
+  }
+  
+  nav a {
+    color: white;
+    display: inline-block;
+    font-size: 24px;
+    margin: 15px;
+    text-decoration: none;
+  }
+  
+  #navTitle {
+    font-size: 36px;
+      border-bottom: 1px solid currentColor; /* Or whatever color you want */
+      text-decoration: none;
+  }
+  
+  #header {
+    width: 100%;
+  }
+  
+  #container {
+    min-height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    position: relative;
+  }
+  
+  #body {
+    padding: 20px;
+    padding-bottom: 60px;
+  }
+  
+  h1 {
+    padding-top: 8%;
+    color: #007bff;
+  }
+  
+  input {
+    font-size: 18px;
+  }
+  
+  button {
+    font-size: 18px;
+  }
+  
+  footer {
+    position:absolute;
+    bottom:0;
+    width: 100%;
+    text-align:left;
+    height:60px;
+  }
+  
+  
+  .navbar-dark .navbar-text {
+    color:black;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .navbar-nav {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+  }
+  
+  .display-4 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    /* line-height: 1.2; */
+    border-bottom: 3px solid black;
+    /* text-decoration: none; */
+    text-align: center;
+  }
+  
+  .card-deck .card {
+    margin-bottom: 15px;
+    margin-left: 5.5% !important;
+  }
+  
+  .card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+    box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
