@@ -77,19 +77,21 @@ public class ProfileServlet extends HttpServlet{
 	// Gets the name of the user that is currently logged in  
 	String username = (String) request.getSession().getAttribute("user");
 	String action = (String) request.getParameter("EditProfilePage");
+	System.out.println(action);
 	User u = userStore.getUser(username);
 	
 	if (action != null && action.equals("EditAboutMe")) {
 		
-	// Gets the text submitted by the user in the aboutme form
-    String aboutMe = request.getParameter("aboutme");
-    System.out.println(action);
-    // Changes to the about me of the user 
-    userStore.getUser(username).setAboutMe(aboutMe);
-    
-    // Updates the user in the persistent data
-    userStore.updateUser(userStore.getUser(username));
-    response.sendRedirect("/user/" + username);
+        // Gets the text submitted by the user in the aboutme form
+        String aboutMe = request.getParameter("aboutme");
+        System.out.println(action);
+        // Changes to the about me of the user
+        userStore.getUser(username).setAboutMe(aboutMe);
+
+        // Updates the user in the persistent data
+        userStore.updateUser(userStore.getUser(username));
+        response.sendRedirect("/user/" + username);
+
 	} else if (action != null && action.equals("EditProfilePicture")) {
 		System.out.println(action);
     
@@ -115,20 +117,24 @@ public class ProfileServlet extends HttpServlet{
 	    System.out.println(action);
 
 	    // Get the theme they selected
-        String selected = request.getParameter("theme");
+        String selected = request.getParameter("Theme");
 
         // Set the theme variable accordingly
         if (selected.equals("one")) {
             u.setTheme("");
         } else if (selected.equals("two")) {
             u.setTheme("body{color:white;background-color:#4ABDAC;}nav{background-color:#FC4A1A;}h1{color:white;}");
+            System.out.println("changing to two");
         } else if (selected.equals("three")) {
             u.setTheme("body{color:white;background-color:#9099A2;}nav{background-color:#6d7993;}h1{color:white;}");
+            System.out.println("changing to three");
         } else if (selected.equals("four")) {
             u.setTheme("body{color:white;background-color:#636B46;}nav{background-color:#CDA34F;}h1{color:white;}");
+            System.out.println("changing to four");
         }
 
         //Send the redirect
+        userStore.updateUser(u);
         response.sendRedirect("/user/" + username);
     }
   }

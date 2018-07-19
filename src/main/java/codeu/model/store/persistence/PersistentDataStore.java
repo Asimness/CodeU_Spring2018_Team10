@@ -143,6 +143,7 @@ public class PersistentDataStore {
         users.add(user);
         String friendList = (String) entity.getProperty("friends");
         List friends = Arrays.asList(friendList.split("\\s*,\\s*"));
+        String theme = (String) entity.getProperty("theme");
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
         // occur include network errors, Datastore service errors, authorization errors,
@@ -246,6 +247,7 @@ public class PersistentDataStore {
     userEntity.setProperty("profilepic", user.getProfilePic());
     userEntity.setProperty("friends", user.getFriends().toString().substring(1, user.getFriends().toString().length() -
             1));
+    userEntity.setProperty("theme", user.getTheme());
     datastore.put(userEntity);
   }
 
