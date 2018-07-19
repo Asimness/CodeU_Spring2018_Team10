@@ -18,25 +18,43 @@
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
   <title>Register</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/registerStyle.css">
 </head>
 <body>
 
-  <nav>
-    <a id="navTitle" href="/">Gear Chat App</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ 
-      String userProfileName = request.getSession().getAttribute("user").toString();
-    %>
-      <a href="/user/<%= userProfileName %>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-    <% } %>
-    <a href="/activityfeed">Activity Feed</a>
-    <a href = "/allConversations">All Conversations</a>
-  </nav>
+    <nav class="navbar navbar-toggleable-md navbar-dark bg-primary"> 
+        <a class="navbar-brand" id="navTitle" href="/">Gear Chat App</a>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/conversations">Conversations</a>
+          </li>
+          <% if(request.getSession().getAttribute("user") != null){ 
+            String userProfileName = request.getSession().getAttribute("user").toString();
+          %>
+          <li class="nav-item active" active>
+            <a class="nav-link" href="/user/<%= userProfileName %>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+          </li>
+          <% } else{ %>
+          <li class="nav-item active">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <% } %>
+          <li class="nav-item active">
+            <a class="nav-link" href="/activityfeed">Activity Feed</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href = "/allConversations">All Conversations</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/adminPage">Administration</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/about.jsp">About</a>
+          </li>
+        </ul>
+    </nav>
 
-  <div id="container">
+  <div class="container">
     <h1>Register</h1>
 
     <% if(request.getAttribute("error") != null){ %>
@@ -64,17 +82,21 @@
     </script>
 
     <form action="/register" onsubmit="return validateForm()" method="POST">
-      <label for="username">Username: </label>
+      <div class="form-group mb-2">
+        <label for="username">Username: </label>
+        <br/>
+        <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+      </div>
       <br/>
-      <input type="text" name="username" id="username">
-      <br/>
-      <label for="password">Password: </label>
-      <br/>
-      <input type="password" name="password" id="password">
+      <div class="form-group mb-2">
+        <label for="password">Password: </label>
+        <br/>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+      </div>
       <br/>
       <label for="gender">Gender: </label>
       <br/>
-      <select name="gender" id="gender">
+      <select name="gender" class="form-control dropdown" id="gender">
         <option style="display:none;" selected value="Select Gender">Select Gender</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
@@ -85,7 +107,7 @@
 
       <label for="age">Age: </label>
       <br/>
-      <select name="age" id="age">
+      <select name="age" class="form-control dropdown" id="age">
         <option style="display:none;" selected value="Select Age">Select Age</option>
       <% int i = 1; 
          while (i < 130) {
@@ -136,16 +158,18 @@
         </optgroup>
       </select>
       <br/><br/>
-      <button type="submit">Submit</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
   
-  <footer>
-    <nav>
-      <a href="/adminPage">Administration</a>
-      <a href="/about.jsp">About</a>
-    </nav>
-  </footer>
+  <nav class="navbar fixed-bottom navbar-dark bg-primary"> 
+      <span class="navbar-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </span>
+  </nav>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
