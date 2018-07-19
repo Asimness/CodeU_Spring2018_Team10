@@ -40,7 +40,13 @@
   </nav>
   
   <H1>All Public Conversations</h1>
-  <input type="text" placeholder="Search..">
+  <form action="/allConversations" method="POST">
+          <div class="form-group">
+          <input type="text" name="search">
+        </div>
+  		<button type="submit">Search</button>
+      </form>
+  
   <div>
     <h1>Conversations</h1>
 
