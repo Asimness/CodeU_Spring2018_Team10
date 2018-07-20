@@ -71,6 +71,19 @@
        User user = UserStore.getInstance().getUser(url.substring(url.lastIndexOf('/') + 1));
       %>
     <% if(user != null) { %>
+      <% if (user.getTheme().equals("two")) { %>
+        <style>
+            body{color:white;background-color:#4ABDAC;}.navbar{background-color:#FC4A1A;}h1{color:white;}
+         </style>
+      <% } else if (user.getTheme().equals("three")) { %>
+          <style>
+            body{color:white;background-color:#9099A2;}.navbar{background-color:#6d7993;}h1{color:white;}
+          </style>
+      <% } else if (user.getTheme().equals("four")) { %>
+          <style>
+            body{color:white;background-color:#636B46;}.navbar{background-color:#CDA34F;}h1{color:white;}
+          </style>
+      <% } %>
     <h1><%= user.getName() + "'s" %> Profile Page</h1>
 
     <!-- <img src="data:image/jpeg;base64,<%= user.getProfilePic() %>" alt="temp" width="250" /> <-->
@@ -113,6 +126,24 @@
     <% } else {} %>
     <hr/>
 
+    <h2>Select A Theme!</h2>
+     <% if (request.getSession().getAttribute("user") != null &&
+           user.getName().equals(request.getSession().getAttribute("user"))) { %>
+     <form action="" method="POST">
+         <label for="EditTheme">Theme: </label>
+                    <br/>
+                      <select class="form-control dropdown" id="Theme" name="Theme">
+                        <option style="display:none;" selected="selected" value="Select One">Select One</option>
+                            <option value="one">One</option>
+                            <option value="two">Two</option>
+                            <option value="three">Three</option>
+                            <option value="four">Four</option>
+                      </select>
+             <button type="submit" name="EditProfilePage" value="EditTheme" class="btn btn-primary">Change</button>
+     </form>
+     <% } else {} %>
+    <hr/>
+
     <h2><%= user.getName() + "'s" %> Friends</h2>
     <div id="friends">
     <% if (user.getFriends() != null && user.getFriends().size() != 0) { %>
@@ -146,6 +177,7 @@
     </div>
   </div>
 
+  <footer class="footer">
   <nav class="navbar sticky-bottom navbar-dark bg-primary"> 
       <span class="navbar-text">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -154,6 +186,7 @@
           Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </span>
   </nav>
+</footer>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>

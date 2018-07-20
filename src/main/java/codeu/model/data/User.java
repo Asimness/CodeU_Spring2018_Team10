@@ -34,6 +34,7 @@ public class User {
   private String ethnicity;
   private Text profilePic;
   private List<String> friends;
+  private String theme = "";
 
   
   /**
@@ -145,6 +146,12 @@ public class User {
 
   /** Returns a list of the user's friends*/
   public List<String> getFriends() { return friends; }
+
+  /** Returns a the current theme **/
+  public String getTheme() {return theme; }
+
+  /** Sets the current theme **/
+  public void setTheme(String theme) {this.theme = theme; }
 
   // To set admin afterwards
   public void setAdmin(boolean newStatus) {
