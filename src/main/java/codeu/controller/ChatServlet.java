@@ -217,7 +217,7 @@ public class ChatServlet extends HttpServlet {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	}
-
+    
     
     messageStore.addMessage(message);
     
