@@ -116,6 +116,8 @@ public class ProfileServlet extends HttpServlet{
         // Get the theme they selected
         String selected = request.getParameter("Theme");
         u.setTheme(selected);
+        System.out.println(selected);
+
 
       /*
       // Set the theme variable accordingly
