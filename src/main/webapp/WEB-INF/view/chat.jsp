@@ -79,19 +79,19 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
     <div id="chat">
     <%
-      for (Message message : messages) {
-        String author = UserStore.getInstance()
-          .getUser(message.getAuthorId()).getName();
-          
-      String msg = message.getContent();
-	  String[] msgs = msg.split("\\s+");
-	  
-	  for(String word : msgs) {
-	  	if(word != null && word.length() > 0){
-		  if(word.charAt(0) == '@') {
-			String name = word.substring(1);
-			if(UserStore.getInstance().getUser(name) != null) {
-    	%>
+      if (!messages.isEmpty()) {
+        for (Message message : messages) {
+            String author = UserStore.getInstance().getUser(message.getAuthorId()).getName();
+
+              String msg = message.getContent();
+              String[] msgs = msg.split("\\s+");
+
+              for(String word : msgs) {
+                if(word != null && word.length() > 0){
+                  if(word.charAt(0) == '@') {
+                    String name = word.substring(1);
+                    if(UserStore.getInstance().getUser(name) != null) {
+                %>
     	<li><strong><a href="/user/<%= name %>"><%= name %></strong></a></li>
       <%
       }
@@ -111,6 +111,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
           </div>
        </div>
     <%
+      }
       }
     %>
     </div>
