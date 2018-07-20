@@ -134,6 +134,7 @@ public class UserStore {
   public void addUser(User user) {
     users.add(user);
     userNameSet.put(user.getName(), user);
+    userUUIDSet.put(user.getId(), user);
     persistentStorageAgent.writeThrough(user);
   }
 
