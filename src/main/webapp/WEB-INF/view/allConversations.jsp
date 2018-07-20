@@ -88,10 +88,10 @@
       %>
       <hr/>
       <% if (request.getSession().getAttribute("user") != null) { %>
-        <form action="/allConversations/" method="POST">
+        <form action="" method="POST">
             <input type="text" name ="convo" placeholder="Search..">
             <br/>
-            <button type="submit">Send</button>
+            <button type="submit" class="btn btn-primary">Send</button>
         </form>
         <% } else { %>
           <p><a href="/login">Login</a> to send a message.</p>

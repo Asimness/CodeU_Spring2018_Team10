@@ -81,6 +81,6 @@ public class AllConversationsServlet extends HttpServlet{
 	     
 
 	     // redirect to a GET request
-	     response.sendRedirect("/allconversations/");
+	     response.sendRedirect("allConversations");
 	   }
 }
