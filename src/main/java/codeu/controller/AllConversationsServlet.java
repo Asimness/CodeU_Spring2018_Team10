@@ -71,18 +71,22 @@ public class AllConversationsServlet extends HttpServlet{
 	     String messageContent = request.getParameter("search");
 
 	     Conversation conversation = conversationStore.getConversationWithTitle(messageContent);
+	     Conversation searchedConvo = null;
 	     if (conversation == null) {
 	       // couldn't find conversation, redirect to conversation list
-	       response.sendRedirect("/conversations");
+	       response.sendRedirect("/allConversations");
 	       return;
 	     }else {
-	    	 System.out.println(conversation.getTitle());
+	    	 searchedConvo = conversation;
+		     request.setAttribute("results", searchedConvo);
+
 	     }
 	     
-	     response.setContentType("/allConversations");
+	     //response.setContentType("/allConversations");
 	     
 
 	     // redirect to a GET request
 	     response.sendRedirect("/allConversations");
+	     
 	   }
 }

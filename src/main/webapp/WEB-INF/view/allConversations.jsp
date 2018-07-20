@@ -51,8 +51,12 @@
     <% } %>
     
     <div>
-    	
-    
+    <% Conversation searched = (Conversation)request.getAttribute("results");	
+     	%>
+     	<% if(searched != null){ %>
+     	<li><a href="/chat/<%= searched.getTitle() %>">
+        <%= searched.getTitle() %></a></li>
+        <% } %>
     </div>
   
   <div>
