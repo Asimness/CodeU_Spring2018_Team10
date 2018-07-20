@@ -91,7 +91,7 @@ List<Activity> activities = (List<Activity>) request.getAttribute("activities");
     </div>
   </div>
 
-  <nav class="navbar fixed-bottom navbar-dark bg-primary"> 
+  <nav class="navbar sticky-bottom navbar-dark bg-primary"> 
       <span class="navbar-text">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
           Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
