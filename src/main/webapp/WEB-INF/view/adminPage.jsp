@@ -165,7 +165,7 @@
     <% } %>
   </div>
 
-  <footer>
+  <footer class="footer">
   <% if (request.getSession().getAttribute("user") == null) { %>
   <nav class="navbar sticky-bottom  navbar-dark bg-primary"> 
       <span class="navbar-text">
