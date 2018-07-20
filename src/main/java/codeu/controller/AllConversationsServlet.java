@@ -12,8 +12,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.TextProcessor;
+
+import com.vdurmont.emoji.EmojiParser;
+
 import codeu.model.data.Activity;
 import codeu.model.data.Conversation;
+import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.basic.ActivityStore;
 import codeu.model.store.basic.ConversationStore;
@@ -43,17 +51,38 @@ public class AllConversationsServlet extends HttpServlet{
 	     request.getRequestDispatcher("/WEB-INF/view/allConversations.jsp").forward(request, response);
 	   }
 	   
+	   /**
+	    * This function fires when a user submits the form on the chat page. It gets the logged-in
+	    * username from the session, the conversation title from the URL, and the chat message from the
+	    * submitted form data. It creates a new Message from that data, adds it to the model, and then
+	    * redirects back to the chat page.
+	    */
 	   @Override
 	   public void doPost(HttpServletRequest request, HttpServletResponse response)
 	       throws IOException, ServletException {
 
+	     String username = (String) request.getSession().getAttribute("user");
+	     if (username == null) {
+	       // user is not logged in, don't let them add a message
+	       response.sendRedirect("/login");
+	       return;
+	     }
 	     
-		   String search = request.getParameter("search");
-		   List<Conversation> conversations = (List<Conversation>) request.getAttribute("conversations");
-		   for(Conversation convo : conversations) {
-			   if(convo.getTitle().contains(search)) {
-				   System.out.println(convo.getTitle());
-			   }
-		   }
+	     String messageContent = request.getParameter("search");
+
+	     Conversation conversation = conversationStore.getConversationWithTitle(messageContent);
+	     if (conversation == null) {
+	       // couldn't find conversation, redirect to conversation list
+	       response.sendRedirect("/conversations");
+	       return;
+	     }else {
+	    	 System.out.println(conversation.getTitle());
+	     }
+	     
+	     response.setContentType("/allConversations");
+	     
+
+	     // redirect to a GET request
+	     response.sendRedirect("/allConversations");
 	   }
 }

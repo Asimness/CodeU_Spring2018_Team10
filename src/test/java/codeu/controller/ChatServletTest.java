@@ -17,10 +17,14 @@ package codeu.controller;
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
+import codeu.model.data.Vertex;
+import codeu.model.data.Edge;
 import codeu.model.store.basic.ActivityStore;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.VertexStore;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -48,7 +52,10 @@ public class ChatServletTest {
   private MessageStore mockMessageStore;
   private UserStore mockUserStore;
   private ActivityStore mockActivityStore;
+  private VertexStore mockVertexStore;
   private Message mockMessage;
+  private User mockUser;
+  private Conversation mockConversation;
 
   @Before
   public void setup() {
@@ -75,7 +82,13 @@ public class ChatServletTest {
     mockActivityStore = Mockito.mock(ActivityStore.class);
     chatServlet.setActivityStore(mockActivityStore);
     
+    mockVertexStore = Mockito.mock(VertexStore.class);
+    chatServlet.setVertexStore(mockVertexStore);
+    
     mockMessage = Mockito.mock(Message.class);
+    mockUser = Mockito.mock(User.class);
+    mockConversation = Mockito.mock(Conversation.class);
+    
     
   }
 
@@ -186,10 +199,17 @@ public class ChatServletTest {
     
     mockActivityStore = Mockito.mock(ActivityStore.class);
     chatServlet.setActivityStore(mockActivityStore);
+    mockVertexStore = Mockito.mock(VertexStore.class);
+    chatServlet.setVertexStore(mockVertexStore);
+    
     
     Mockito.when(mockMessage.getCreationTime()).thenReturn(Instant.now());
     Mockito.when(mockMessage.getContent()).thenReturn("test_message");
     Mockito.when(mockMessage.getAuthorId()).thenReturn(fakeUser.getId());
+    Mockito.when(mockUser.getName()).thenReturn("t");
+    //Mockito.when(mockConversation.getOwnerId()).thenReturn(UUID.randomUUID());
+    //Mockito.when(mockUserStore.getUser(UUID.randomUUID())).thenReturn(fakeUser);
+    //Mockito.when(mockUser.getName()).thenReturn(fakeUser.getName());
     //Mockito.when(mockUserStore.getUser(mockMessage.getAuthorId()).getName()).thenReturn("test_username");
     chatServlet.doPost(mockRequest, mockResponse);
 

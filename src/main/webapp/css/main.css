@@ -15,6 +15,8 @@
 
 body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: sans-serif;
   line-height: 1.6;
   font-size: 18px;
@@ -37,16 +39,29 @@ nav a {
 
 #navTitle {
   font-size: 36px;
+    border-bottom: 1px solid currentColor; /* Or whatever color you want */
+    text-decoration: none;
+}
+
+#header {
+  width: 100%;
 }
 
 #container {
+  min-height: 100%;
   margin-left: auto;
   margin-right: auto;
-  width: 800px;
+  width: 100%;
+  position: relative;
+}
+
+#body {
+  padding: 20px;
+  padding-bottom: 60px;
 }
 
 h1 {
-  color: #757575;
+  color: #007bff;
 }
 
 input {
@@ -58,8 +73,47 @@ button {
 }
 
 footer {
-  position:relative;
+  position:absolute;
+  bottom:0;
   width: 100%;
   text-align:left;
-  padding:15px 0;
+  height:60px;
+}
+
+
+.navbar-dark .navbar-text {
+  color:black;
+  text-align: center;
+  font-weight: bold;
+}
+
+.navbar-nav {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.display-4 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  /* line-height: 1.2; */
+  border-bottom: 3px solid black;
+  /* text-decoration: none; */
+  text-align: center;
+}
+
+.card-deck .card {
+  margin-bottom: 15px;
+  margin-left: 5.5% !important;
+}
+
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+  box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

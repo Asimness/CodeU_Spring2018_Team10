@@ -13,15 +13,17 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.*" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.data.User" %>
+<%@ page import="com.google.appengine.api.datastore.Text" %>
 
 <!DOCTYPE html>
 <html>
 <head>
   <title>Profile</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/profileStyle.css">
   <style>
     #messages {
       background-color: white;
@@ -32,35 +34,61 @@
 </head>
 <body>
 
-  <nav>
-    <a id="navTitle" href="/">Gear Chat App</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ 
-      String userProfileName = request.getSession().getAttribute("user").toString();
-    %>
-      <a href="/user/<%= userProfileName %>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-    <% } %>
-    <a href="/about.jsp">About</a>
-    <a href="/activityfeed">Activity Feed</a>
-    <a href = "/allConversations">All Conversations</a>
-  </nav>
+    <nav class="navbar navbar-toggleable-md navbar-dark bg-primary"> 
+        <a class="navbar-brand" id="navTitle" href="/">Gear Chat App</a>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/conversations">Conversations</a>
+          </li>
+          <% if(request.getSession().getAttribute("user") != null){ 
+            String userProfileName = request.getSession().getAttribute("user").toString();
+          %>
+          <li class="nav-item active" active>
+            <a class="nav-link" href="/user/<%= userProfileName %>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+          </li>
+          <% } else{ %>
+          <li class="nav-item active">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <% } %>
+          <li class="nav-item active">
+            <a class="nav-link" href="/activityfeed">Activity Feed</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href = "/allConversations">All Conversations</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/adminPage">Administration</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/about.jsp">About</a>
+          </li>
+        </ul>
+    </nav>
 
-  <div id="container">
+  <div class="container">
     <% String url = request.getAttribute("javax.servlet.forward.request_uri").toString();
        User user = UserStore.getInstance().getUser(url.substring(url.lastIndexOf('/') + 1));
       %>
     <% if(user != null) { %>
     <h1><%= user.getName() + "'s" %> Profile Page</h1>
-    <img src="../images/temp.jpg" alt="temp"/>
-    <% if (request.getSession().getAttribute("user") != null &&
+
+    <!-- <img src="data:image/jpeg;base64,<%= user.getProfilePic() %>" alt="temp" width="250" /> <-->
+    <% if (user.getProfilePic() == null) { %>
+      <img src="../images/temp.jpg" alt="temp"/>
+    <% } else { %>
+      <img src="data:image/jpeg;base64,<%= user.getProfilePic().getValue() %>" alt="temp" width="250" />
+    <% } %>
+
+    <% if (request.getSession().getAttribute("user") != null && 
+           
       user.getName().equals(request.getSession().getAttribute("user"))) { %>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         <label for="EditProfilePicture">Edit Your Profile Picture: </label>
         <br/>
         <br/>
-        <button type="submit" name="EditProfilePage" value="EditProfilePicture">Upload</button>
+        <input type="file" name="pic" accept="image/*">
+        <button type="submit" name="EditProfilePage" value="EditProfilePicture" class="btn btn-primary">Upload</button>
     </form>
     <% } else {} %>
     <hr/>
@@ -79,14 +107,15 @@
         <br/>
         <textarea rows="8" cols="50" type="text" name="aboutme" id="aboutme"></textarea>
         <br/>
-        <button type="submit" name="EditProfilePage" value="EditAboutMe">Submit</button>
+        <button type="submit" name="EditProfilePage" value="EditAboutMe" class="btn btn-primary">Submit</button>
+        <param name="test" value="text">
     </form>
     <% } else {} %>
     <hr/>
 
-    <h2><%= user.getName() + "'s"%> Friends</h2>
+    <h2><%= user.getName() + "'s" %> Friends</h2>
     <div id="friends">
-    <% if (user.getFriends().size() != 0) { %>
+    <% if (user.getFriends() != null && user.getFriends().size() != 0) { %>
       <% for (String friend : user.getFriends()) { %>
       <ul>
            <li> <%= friend %> </li>
@@ -117,11 +146,16 @@
     </div>
   </div>
 
-  <footer>
-    <nav>
-      <a href="/adminPage">Administration</a>
-      <a href="/about.jsp">About</a>
-    </nav>
-  </footer>
+  <nav class="navbar sticky-bottom navbar-dark bg-primary"> 
+      <span class="navbar-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </span>
+  </nav>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 </body>
 </html>

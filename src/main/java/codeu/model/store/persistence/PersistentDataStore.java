@@ -16,8 +16,10 @@ package codeu.model.store.persistence;
 
 import codeu.model.data.Activity;
 import codeu.model.data.Conversation;
+import codeu.model.data.Edge;
 import codeu.model.data.Message;
 import codeu.model.data.User;
+import codeu.model.data.Vertex;
 import codeu.model.store.persistence.PersistentDataStoreException;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -26,8 +28,12 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Text;
+
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +53,34 @@ public class PersistentDataStore {
    */
   public PersistentDataStore() {
     datastore = DatastoreServiceFactory.getDatastoreService();
+  }
+  
+  /**
+   * Loads all Activity objects from the Datastore service and returns them in a List.
+   *
+   * @throws PersistentDataStoreException if an error was detected during the load from the
+   *     Datastore service
+   */
+  public List<String> loadVerticies() throws PersistentDataStoreException {
+
+    List<String> verticies = new ArrayList<>();
+
+    // Retrieve all activities from the datastore.
+    Query query = new Query("vertex");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      try {
+    	String name = (String) entity.getProperty("vertexname");
+        verticies.add(name);
+      } catch (Exception e) {
+        // In a production environment, errors should be very rare. Errors which may
+        // occur include network errors, Datastore service errors, authorization errors,
+        // database entity definition mismatches, or service mismatches.
+        throw new PersistentDataStoreException(e);
+      }
+    }
+    return verticies;
   }
   
   /**
@@ -89,7 +123,7 @@ public class PersistentDataStore {
   public List<User> loadUsers() throws PersistentDataStoreException {
 
     List<User> users = new ArrayList<>();
-
+    
     // Retrieve all users from the datastore.
     Query query = new Query("chat-users");
     PreparedQuery results = datastore.prepare(query);
@@ -104,8 +138,15 @@ public class PersistentDataStore {
         String gender = (String) entity.getProperty("gender");
         int age = ((Long) entity.getProperty("age")).intValue();
         String ethnicity = (String) entity.getProperty("ethnicity");
-        User user = new User(uuid, userName, password, aboutme, creationTime, gender, age, ethnicity);
+        Text profilePic = (Text) entity.getProperty("profilepic");
+        User user = new User(uuid, userName, password, aboutme, creationTime, gender, age, ethnicity, profilePic);
         users.add(user);
+        try {
+        	String friendList = (String) entity.getProperty("friends");
+        	List friends = Arrays.asList(friendList.split("\\s*,\\s*"));
+        }catch(Exception e) {
+        	
+        }
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
         // occur include network errors, Datastore service errors, authorization errors,
@@ -172,7 +213,8 @@ public class PersistentDataStore {
         UUID authorUuid = UUID.fromString((String) entity.getProperty("author_uuid"));
         Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
         String content = (String) entity.getProperty("content");
-        Message message = new Message(uuid, conversationUuid, authorUuid, content, creationTime);
+        String sentiment =  (String) entity.getProperty("sentiment");
+        Message message = new Message(uuid, conversationUuid, authorUuid, content, creationTime, sentiment);
         messages.add(message);
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
@@ -205,6 +247,9 @@ public class PersistentDataStore {
     userEntity.setProperty("gender", user.getGender());
     userEntity.setProperty("age", user.getAge());
     userEntity.setProperty("ethnicity", user.getEthnicity());
+    userEntity.setProperty("profilepic", user.getProfilePic());
+    userEntity.setProperty("friends", user.getFriends().toString().substring(1, user.getFriends().toString().length() -
+            1));
     datastore.put(userEntity);
   }
 
@@ -216,6 +261,7 @@ public class PersistentDataStore {
     messageEntity.setProperty("author_uuid", message.getAuthorId().toString());
     messageEntity.setProperty("content", message.getContent());
     messageEntity.setProperty("creation_time", message.getCreationTime().toString());
+    messageEntity.setProperty("sentiment", message.getSentiment());
     datastore.put(messageEntity);
   }
 
@@ -228,5 +274,11 @@ public class PersistentDataStore {
     conversationEntity.setProperty("creation_time", conversation.getCreationTime().toString());
     datastore.put(conversationEntity);
   }
+  
+  /** Write a Vertex object to the Datastore service. */
+  public void writeThrough(String v) {
+    Entity vertexEntity = new Entity("vertex", v);
+    vertexEntity.setProperty("vertexname", v);
+    datastore.put(vertexEntity);
+  }
 }
-
