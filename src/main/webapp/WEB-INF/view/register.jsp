@@ -162,7 +162,7 @@
     </form>
   </div>
   
-<footer>
+  <footer class="footer">
   <nav class="navbar sticky-bottom navbar-dark bg-primary"> 
       <span class="navbar-text">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
