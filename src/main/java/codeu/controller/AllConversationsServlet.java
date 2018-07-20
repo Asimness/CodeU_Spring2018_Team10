@@ -68,19 +68,25 @@ public class AllConversationsServlet extends HttpServlet{
 	       return;
 	     }
 	     
-	     String messageContent = request.getParameter("convo");
+	     String messageContent = request.getParameter("search");
 
 	     Conversation conversation = conversationStore.getConversationWithTitle(messageContent);
+	     Conversation searchedConvo = null;
 	     if (conversation == null) {
 	       // couldn't find conversation, redirect to conversation list
-	       response.sendRedirect("/conversations");
+	       response.sendRedirect("/allConversations");
 	       return;
+	     }else {
+	    	 searchedConvo = conversation;
+		     request.setAttribute("results", searchedConvo);
+
 	     }
 	     
-	     response.setContentType("/allconversations/");
+	     //response.setContentType("/allConversations");
 	     
 
 	     // redirect to a GET request
-	     response.sendRedirect("allConversations");
+	     doGet(request, response);
+
 	   }
 }
