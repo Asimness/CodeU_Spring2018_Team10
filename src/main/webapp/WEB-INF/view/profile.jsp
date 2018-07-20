@@ -17,6 +17,11 @@
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.data.User" %>
 <%@ page import="com.google.appengine.api.datastore.Text" %>
+<% if (request.getSession().getAttribute("user") != null) { %>
+     <% String username = (String) request.getSession().getAttribute("user");
+        User user = (User) UserStore.getInstance().getUser(username);
+        String themeNum = user.getTheme(); %>
+<% } %>
 
 <!DOCTYPE html>
 <html>
@@ -112,6 +117,24 @@
     </form>
     <% } else {} %>
     <hr/>
+
+    <h2>Select A Theme!</h2>
+     <% if (request.getSession().getAttribute("user") != null &&
+           user.getName().equals(request.getSession().getAttribute("user"))) { %>
+     <form action="" method"POST">
+         <label for="EditTheme">Theme: </label>
+           <br/>
+             <select class="form-control dropdown" id="Theme" name="Theme">
+               <option style="display:none;" selected="selected" value="Select One">Select One</option>
+                   <option value="one">One</option>
+                   <option value="two">Two</option>
+                   <option value="three">Three</option>
+                   <option value="four">Four</option>
+             </select>
+             <button type="submit" name="EditProfilePage" value="EditTheme">Submit</button>
+     </form>
+     <% } %>
+    </hr>
 
     <h2><%= user.getName() + "'s" %> Friends</h2>
     <div id="friends">
