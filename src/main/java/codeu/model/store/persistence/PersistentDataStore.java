@@ -141,6 +141,7 @@ public class PersistentDataStore {
         Text profilePic = (Text) entity.getProperty("profilepic");
         User user = new User(uuid, userName, password, aboutme, creationTime, gender, age, ethnicity, profilePic);
         users.add(user);
+        String theme = (String) entity.getProperty("theme");
         try {
         	String friendList = (String) entity.getProperty("friends");
         	List friends = Arrays.asList(friendList.split("\\s*,\\s*"));
@@ -250,6 +251,7 @@ public class PersistentDataStore {
     userEntity.setProperty("profilepic", user.getProfilePic());
     userEntity.setProperty("friends", user.getFriends().toString().substring(1, user.getFriends().toString().length() -
             1));
+    userEntity.setProperty("theme", user.getTheme());
     datastore.put(userEntity);
   }
 

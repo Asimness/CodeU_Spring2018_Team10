@@ -71,6 +71,19 @@
        User user = UserStore.getInstance().getUser(url.substring(url.lastIndexOf('/') + 1));
       %>
     <% if(user != null) { %>
+      <% if (user.getTheme().equals("two")) { %>
+        <style>
+            body{color:white;background-color:#4ABDAC;}.navbar{background-color:#FC4A1A;}h1{color:white;}
+         </style>
+      <% } else if (user.getTheme().equals("three")) { %>
+          <style>
+            body{color:white;background-color:#9099A2;}.navbar{background-color:#6d7993;}h1{color:white;}
+          </style>
+      <% } else if (user.getTheme().equals("four")) { %>
+          <style>
+            body{color:white;background-color:#636B46;}.navbar{background-color:#CDA34F;}h1{color:white;}
+          </style>
+      <% } %>
     <h1><%= user.getName() + "'s" %> Profile Page</h1>
 
     <!-- <img src="data:image/jpeg;base64,<%= user.getProfilePic() %>" alt="temp" width="250" /> <-->
@@ -111,6 +124,24 @@
         <param name="test" value="text">
     </form>
     <% } else {} %>
+    <hr/>
+
+    <h2>Select A Theme!</h2>
+     <% if (request.getSession().getAttribute("user") != null &&
+           user.getName().equals(request.getSession().getAttribute("user"))) { %>
+     <form action="" method="POST">
+         <label for="EditTheme">Theme: </label>
+                    <br/>
+                      <select class="form-control dropdown" id="Theme" name="Theme">
+                        <option style="display:none;" selected="selected" value="Select One">Select One</option>
+                            <option value="one">One</option>
+                            <option value="two">Two</option>
+                            <option value="three">Three</option>
+                            <option value="four">Four</option>
+                      </select>
+             <button type="submit" name="EditProfilePage" value="EditTheme" class="btn btn-primary">Change</button>
+     </form>
+     <% } else {} %>
     <hr/>
 
     <h2><%= user.getName() + "'s" %> Friends</h2>
