@@ -26,21 +26,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
   <title><%= conversation.getTitle() %></title>
-
-  <link rel="stylesheet" href="/css/main.css" type="text/css">
-
-  <style>
-    div.card {
-        width: 800px;
-        background:white;
-        text-color:black;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        text-align: left;
-        margin-bottom:10px;
-        height:75px;
-        padding-left:10px;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/chatStyle.css" type="text/css">
+  <link rel="stylesheet" href="/css/chatStyle.css" type="text/css">
 
   <script>
     // scroll the chat div to the bottom
