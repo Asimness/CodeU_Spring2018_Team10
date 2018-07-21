@@ -20,22 +20,42 @@
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
   <title>GEAR Chat App</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/allconvoStyle.css">
+  <link rel="stylesheet" href="/css/allconvoStyle.css">
 </head>
 <body>
 
-  <nav>
-    <a id="navTitle" href="/">GEAR Chat App</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-    <% } %>
-    <a href="/about.jsp">About</a>
-    <a href="/activityfeed">Activity Feed</a>
-    <a href = "/allConversations">All Conversations</a>
-  </nav>
+    <nav class="navbar navbar-toggleable-md navbar-dark bg-primary"> 
+        <a class="navbar-brand" id="navTitle" href="/">Gear Chat App</a>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/conversations">Conversations</a>
+          </li>
+          <% if(request.getSession().getAttribute("user") != null){ 
+            String userProfileName = request.getSession().getAttribute("user").toString();
+          %>
+          <li class="nav-item active" active>
+            <a class="nav-link" href="/user/<%= userProfileName %>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+          </li>
+          <% } else{ %>
+          <li class="nav-item active">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <% } %>
+          <li class="nav-item active">
+            <a class="nav-link" href="/activityfeed">Activity Feed</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href = "/allConversations">All Conversations</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/adminPage">Administration</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/about.jsp">About</a>
+          </li>
+		</ul>
+	</nav>
   
 
   <div class="container">
@@ -44,7 +64,7 @@
     <form action="/allConversations" method="POST">
         <input type="text" name = "search" >
         <br/>
-        <button type="submit">Search</button>
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
     <% } else { %>
       <p><a href="/login">Login</a> to send a message.</p>
@@ -56,6 +76,7 @@
      	<% if(searched != null){ %>
      	<li><a href="/chat/<%= searched.getTitle() %>">
         <%= searched.getTitle() %></a></li>
+        <% } %>
       
     <H1>All Public Conversations</h1>
     

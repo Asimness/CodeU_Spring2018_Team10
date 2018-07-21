@@ -67,7 +67,8 @@
   
   input {
     font-size: 18px;
-  }
+    margin-top: 5%;
+}
   
   button {
     font-size: 18px;
@@ -121,4 +122,11 @@
     padding: 1.25rem;
     box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
+
+  .btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    margin-top: 2%;
+}
   
