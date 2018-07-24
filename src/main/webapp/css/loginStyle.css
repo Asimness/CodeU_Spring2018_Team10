@@ -155,3 +155,7 @@
     margin: 0 auto;
     text-align: center;
 }
+.footer {
+  margin-top: 50px;
+  padding-bottom: 15px;
+}
