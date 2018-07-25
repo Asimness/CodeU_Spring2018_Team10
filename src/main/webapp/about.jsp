@@ -18,7 +18,7 @@
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
   <title>CodeU Chat App</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/aboutStyle.css">
 </head>
 <body>
 
@@ -55,9 +55,8 @@
       </nav>
     
 
-      <div id="body">
-        <div
-          style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
+      <div class="container">
+        
 
           <h1>About the CodeU Chat App</h1>
           <p>
@@ -85,6 +84,7 @@
             <b> bold </b> . Users have the option to add color, fonts, and other cool features with the
             use of BBCode. For some examples, users may check <a href="https://en.wikipedia.org/wiki/BBCode"> this</a> page out and test some styles out. </li>
           </ul>
+          </div>
 
           <navbar class="navbar navbar-dark bg-primary footer"> 
             <span class="navbar-text">
