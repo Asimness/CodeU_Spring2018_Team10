@@ -70,7 +70,7 @@
       <p><a href="/login">Login</a> to send a message.</p>
     <% } %>
     
-    <div>
+    
     <% Conversation searched = (Conversation)request.getAttribute("results");	
      	%>
      	<% if(searched != null){ %>
@@ -105,7 +105,9 @@
       <%
       }
       %>
-      <hr/>
+    </hr>
+    
+      
       
     </div>
 
