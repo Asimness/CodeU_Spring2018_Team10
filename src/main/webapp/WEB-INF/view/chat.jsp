@@ -109,6 +109,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
           </div>
           <div class="card-footer text-muted">
               <p><%= message.getSentiment() %><p>
+              </hr>
+              <p><%= message.getEmotion() %></p>
           </div>
        </div>
     <%

@@ -213,6 +213,7 @@ public class ChatServlet extends HttpServlet {
     try {
     	System.out.println(sa.getSentiment(cleanedMessageContent));
 		message.setSentiment(sa.getSentiment(cleanedMessageContent));
+		message.setEmotion(sa.getEmotion(cleanedMessageContent));
 	} catch (Exception e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
