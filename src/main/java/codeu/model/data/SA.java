@@ -35,7 +35,7 @@ public class SA {
 			}
 		}
 		System.out.println(pos + " " + neg + " " + neut);
-		result = "Sentiment - Postive: " + pos + " Negative: " + neg + " Neutral: " + neut;
+		result = "<strong>Sentiment</strong> - <strong>Postive</strong>: " + pos + " <strong>Negative</strong>: " + neg + " <strong>Neutral</strong>: " + neut;
 		return result;
 	}
 	
@@ -82,7 +82,9 @@ public class SA {
 		}
 		
 		
-		result = String.format("Emotion - Sad: %s\tSarcasm: %s\tExcited: %s\tFear: %s\tHappy: %s\tAngry: %s\tBored: %s", sad, sarcasm, excited, fear, happy, angry, bored);
+		result = String.format("<strong>Emotion</strong> - <strong>Sad</strong>: "
+				+ "%s\t<strong>Sarcasm</strong>: %s\t<strong>Excited</strong>: "
+				+ "%s\t<strong>Fear</strong>: %s\t<strong>Happy</strong>: %s\t<strong>Angry</strong>: %s\t<strong>Bored</strong>: %s", sad, sarcasm, excited, fear, happy, angry, bored);
 		
 		return result;
 	}
